@@ -74,36 +74,39 @@ background:rgb(255, 255, 255);
 }
 </style>
     </div>
-    <nav data-w-id="e8581429-10be-cc33-0e89-dbfc606c83e7" class="nav">
+    <nav class="nav light">
       <div class="nav-wrap">
         <div class="nav-top">
           <a href="#" class="logo-link w-inline-block">
             <h1 class="heading-34">EXful</h1>
           </a>
-          <div class="profile-wrap"><img src="{% static '/images/profile-img_1profile-img.jpg' %}" loading="lazy" alt="" class="profile-img">
+          <div class="profile-wrap"><img src="{% static 'images/profile-img_1profile-img.jpg' %}" loading="lazy" alt="" class="profile-img">
             <p class="paragraph-2">{% if username %}{{ username }}{% else %}Stranger{% endif %}</p>
           </div>
           <div class="nav-menu mb-10">
-            <a href="/dashboard/" class="nav-link actave w-inline-block"><img src="{% static '/images/Home.svg' %}" loading="lazy" alt="" class="image-12">
-              <p class="paragraph-3">Overview</p>
+            <a href="/dashboard/" aria-current="page" class="nav-link actave w-inline-block w--current"><img src="{% static 'images/Home.svg' %}" loading="lazy" alt="" class="nimg">
+              <p class="nvh">Overview</p>
             </a>
             <a href="/wallet/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Wallet</p><img src="{% static '/images/Wallet.svg' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Wallet</p><img src="{% static 'images/Wallet.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
             <a href="/trade/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Trade</p><img src="{% static '/images/Activity.svg' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Trade</p><img src="{% static 'images/Activity.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
             <a href="/market/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Market</p><img src="{% static '/images/Chart_1.svg' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Market</p><img src="{% static 'images/Chart_1.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
             <a href="/news/" class="nav-link w-inline-block">
-              <p class="paragraph-3">News</p><img src="{% static 'images/Discovery.svg' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">News</p><img src="{% static 'images/Discovery.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
             <a href="/bot_plan/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Trading Plans</p><img src="{% static 'images/bot.png' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Bot Plan</p><img src="{% static 'images/bot.png' %}" loading="lazy" alt="" class="nimg">
             </a>
-            <a href="../dashboard/current-plans.html" class="nav-link w-inline-block">
-              <p class="paragraph-3">Current Plan</p><img src="{% static '/images/Graph.svg' %}" loading="lazy" alt="" class="image-12">
+            <a href="/current-plans/" class="nav-link w-inline-block">
+              <p class="nvh">Current Plan</p><img src="{% static 'images/Graph.svg' %}" loading="lazy" alt="" class="nimg">
+            </a>
+            <a href="/accountsettings/" class="nav-link w-inline-block">
+              <p class="nvh">Settings</p><img src="{% static 'images/Setting.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
           </div>
         </div>
@@ -135,7 +138,7 @@ background:rgb(255, 255, 255);
       </div>
     </div>
     <div class="content-2">
-      <div class="content-left lll">
+      <div class="content-left">
         <div class="div-block-242">
           {% for message in messages %}
           <div class="div-block-311 w-inline-block">
@@ -154,8 +157,8 @@ background:rgb(255, 255, 255);
                 <div data-w-tab="Tab 1" class="w-tab-pane w--tab-active">
                   <div class="stat-wrap okada kkk">
                     <div class="div-block-239 lla">
-                      <h1 class="balance">{% if trade_balance %} ${{trade_balance}} {% else %}$0.00{% endif %}</h1>
-                      <a id="w-node-f45b0b93-4a8c-a4fc-2611-a3fe50cb2b5d-ba61a5b6"href="/transfer/" style="color: white;" class="depo balance-action">
+                      <h1 class="balance">{% if trade_balance %} {{currency}}{{trade_balance}} {% else %}{{currency}}0.00{% endif %}</h1>
+                      <a id="w-node-f45b0b93-4a8c-a4fc-2611-a3fe50cb2b5d-ba61a5b6" href="/transfer/" style="color: white;" class="depo balance-action">
                         <img src="{% static 'images/Arrow---Down-Circle.svg' %}" alt="" class="image-11">
                         <div class="text-block-17">Transfer</div>
                       </a>
@@ -182,6 +185,30 @@ background:rgb(255, 255, 255);
                     <h3 class="heading-13">Traders</h3>
                   </div>
                   <div class="trader-holder">
+                    <div class="div-block-252 d77">
+                      <div id="w-node-_2411c73e-b0cc-62b4-dc7d-5607009e6dd3-533f1b6c" class="div-block-253">
+                        <div class="div-block-254">
+                          <div class="div-block-255"></div>
+                        </div>
+                        <div class="div-block-256 llm lml lum">
+                          <div class="text-block-27">Name</div>
+                        </div>
+                      </div>
+                      <div id="w-node-_2411c73e-b0cc-62b4-dc7d-5607009e6ddc-533f1b6c" class="div-block-257">
+                        <div class="div-block-256 llm lml">
+                          <div class="text-block-27">Wins Offset</div>
+                        </div>
+                      </div>
+                      <div id="w-node-_2411c73e-b0cc-62b4-dc7d-5607009e6de2-533f1b6c" class="div-block-256 llm lml">
+                        <div class="text-block-27">Loss Offset</div>
+                      </div>
+                      <div id="w-node-_2411c73e-b0cc-62b4-dc7d-5607009e6de7-533f1b6c" class="div-block-256 llm lml">
+                        <div class="text-block-27">Profit Share</div>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  <div class="trader-holder">
                     {% for trader in traders %}
                     <div class="div-block-252">
                       <div id="w-node-e861a741-adc6-9872-da4b-7893d8990308-533f1b6c" class="div-block-253">
@@ -195,7 +222,7 @@ background:rgb(255, 255, 255);
                           </div>
                         </div>
                         <div class="div-block-256">
-                          <div class="trader-name indicate">{{ trader.trader_name }}</div>
+                          <a href="{{ trader.profile_url }}" class="trader-name indicate" style="text-decoration: none; color: black;">{{ trader.trader_name }}</a>
                         </div>
                       </div>
                       <div id="w-node-e861a741-adc6-9872-da4b-7893d8990311-533f1b6c" class="div-block-257">
@@ -235,38 +262,39 @@ background:rgb(255, 255, 255);
                       <div class="text-block-50">Asset</div>
                       <div class="text-block-50">Leverage</div>
                       <div class="text-block-50">Amount</div>
-                      <div class="text-block-50">% Profit/Loss</div>
+                      <div class="text-block-50">Profit/Loss</div>
                       <div class="text-block-50">Status</div>
                     </div>
-                    {% for trad in trade %}
+                    {% for trade in user_trades %}
                     <div class="div-block-324 ojo">
-                      <div class="text-block-50">{{trad.asset}}</div>
-                      <div class="text-block-50">{{trad.leverage}}x</div>
-                      <div class="text-block-50">{{trad.amount}}</div>
-                      {% if trad.status == 'pending' %}
-                      <div class="text-block-50">Running</div>
-                      {% else %}
-                      <div class="text-block-50">{{ trad.change }}</div>
-                      {% endif %}
-                      <div class="text-block-50">
-                        {% if trad.status == 'pending' %}
-                <div class="pending active">
-                  <div class="div-block-301"></div>
-                  <div class="text-block-39">Pending</div>
-                </div>
-                {% elif trad.status == 'approved' %}
-                <div class="activ-e active">
-                  <div class="text-block-40">Completed</div>
-                  <div class="div-block-303"></div>
-                </div>
-                {% else %}
-                <div class="activ-e active">
-                  <div class="text-block-40">No trade Yet</div>
-                  <div class="div-block-303"></div>
-                </div>
-                {% endif %}
-                      </div>
-                      {% endfor %}
+                        <div class="text-block-50">{{trade.asset}}</div>
+                        <div class="text-block-50">{{trade.leverage}}x</div>
+                        <div class="text-block-50">{{trade.amount}}</div>
+                        {% if trade.status == 'pending' %}
+                        <div class="text-block-50">Running</div>
+                        {% else %}
+                        <div class="text-block-50">{{ trade.change }}%</div>
+                        {% endif %}
+            
+                        {% if trade.status == 'pending' %}
+                        <div class="pending active">
+                            <div class="div-block-301"></div>
+                            <div class="text-block-39">Pending</div>
+                            
+                        </div>
+                        {% elif trade.status == 'approved' %}
+                        <div class="activ-e active">
+                            <div class="text-block-40">Completed</div>
+                            <div class="div-block-303"></div>
+                        </div>
+                        {% else %}
+                        <div class="activ-e active">
+                            <div class="text-block-40">No trade Yet</div>
+                            <div class="div-block-303"></div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
                     </div>
                   </div>
                 </div>

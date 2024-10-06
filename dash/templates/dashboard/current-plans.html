@@ -74,36 +74,36 @@ background:rgb(255, 255, 255);
 }
 </style>
     </div>
-    <nav data-w-id="e8581429-10be-cc33-0e89-dbfc606c83e7" class="nav">
+    <nav class="nav light">
       <div class="nav-wrap">
         <div class="nav-top">
           <a href="#" class="logo-link w-inline-block">
             <h1 class="heading-34">EXful</h1>
           </a>
-          <div class="profile-wrap"><img src="{% static '/images/profile-img_1profile-img.jpg' %}" loading="lazy" alt="" class="profile-img">
+          <div class="profile-wrap"><img src="{% static 'images/profile-img_1profile-img.jpg' %}" loading="lazy" alt="" class="profile-img">
             <p class="paragraph-2">{% if username %}{{ username }}{% else %}Stranger{% endif %}</p>
           </div>
           <div class="nav-menu mb-10">
-            <a href="/dashboard/" class="nav-link actave w-inline-block"><img src="{% static '/images/Home.svg' %}" loading="lazy" alt="" class="image-12">
-              <p class="paragraph-3">Overview</p>
+            <a href="/dashboard/" aria-current="page" class="nav-link actave w-inline-block w--current"><img src="{% static 'images/Home.svg' %}" loading="lazy" alt="" class="nimg">
+              <p class="nvh">Overview</p>
             </a>
             <a href="/wallet/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Wallet</p><img src="{% static '/images/Wallet.svg' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Wallet</p><img src="{% static 'images/Wallet.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
-            <a href="../dashboard/trade.html" class="nav-link w-inline-block">
-              <p class="paragraph-3">Trade</p><img src="{% static '/images/Activity.svg' %}" loading="lazy" alt="" class="image-12">
+            <a href="/trade/" class="nav-link w-inline-block">
+              <p class="nvh">Trade</p><img src="{% static 'images/Activity.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
             <a href="/market/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Market</p><img src="{% static '/images/Chart_1.svg' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Market</p><img src="{% static 'images/Chart_1.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
             <a href="/news/" class="nav-link w-inline-block">
-              <p class="paragraph-3">News</p><img src="{% static 'images/Discovery.svg' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">News</p><img src="{% static 'images/Discovery.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
             <a href="/bot_plan/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Trading Plans</p><img src="{% static 'images/bot.png' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Bot Plan</p><img src="{% static 'images/bot.png' %}" loading="lazy" alt="" class="nimg">
             </a>
             <a href="/current-plans/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Current Plan</p><img src="{% static '/images/Graph.svg' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Current Plan</p><img src="{% static 'images/Graph.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
           </div>
         </div>
@@ -135,20 +135,20 @@ background:rgb(255, 255, 255);
       </div>
     </div>
     <div class="content-2">
-      <div class="content-left lll">
+      <div class="content-left">
         <div class="div-block-242">
           <div class="stat-wrap">
             <div data-current="Tab 1" data-easing="ease" data-duration-in="300" data-duration-out="100" class="tabs w-tabs">
               <div class="tabs-menu-4 jj w-tab-menu">
                 <a data-w-tab="Tab 1" class="tab-link-tab-1-2 w-inline-block w-tab-link w--current">
-                  <div>Total Balance</div>
+                  <div>Bot Balance</div>
                 </a>
               </div>
               <div class="w-tab-content">
                 <div data-w-tab="Tab 1" class="w-tab-pane w--tab-active">
                   <div class="stat-wrap okada">
                     <div class="div-block-239 lla">
-                      <h1 class="balance">{% if bot_balance %} ${{ bot_balance }} {% else%}  $0 {% endif %}</h1>
+                      <h1 class="balance">{% if bot_balance %} {{currency}}{{ bot_balance }} {% else%}  {{currency}}0 {% endif %}</h1>
                       <a id="w-node-f45b0b93-4a8c-a4fc-2611-a3fe50cb2b5d-ba61a5b6"href="/transfer/" style="color: white;" class="depo balance-action">
                         <img src="{% static 'images/Arrow---Down-Circle.svg' %}" alt="" class="image-11">
                         <div class="text-block-17">Transfer</div>
@@ -174,7 +174,7 @@ background:rgb(255, 255, 255);
               </div>
               {% for bot in bot_trades %}
               <div class="div-block-324 ojo">
-                <div class="text-block-50">+${{ bot.amount }}</div>
+                <div class="text-block-50">+{{currency}}{{ bot.amount }}</div>
                 <div class="text-block-50">{{ bot.asset }}</div>
               </div>
               {% endfor %}

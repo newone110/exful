@@ -78,23 +78,33 @@
             <a data-w-tab="Tab 5" class="tab-link-tab-1-3 w-inline-block w-tab-link">
               <div>SOL</div>
             </a>
+            <a data-w-tab="Tab 6" class="tab-link-tab-1-3 w-inline-block w-tab-link">
+              <div>USDC</div>
+            </a>
+            <a data-w-tab="Tab 7" class="tab-link-tab-1-3 w-inline-block w-tab-link">
+              <div>LUSD</div>
+            </a>
+            <a data-w-tab="Tab 8" class="tab-link-tab-1-3 w-inline-block w-tab-link">
+              <div>Bank Withdrawal</div>
+            </a>
           </div>
           <div class="w-tab-content">
             <div data-w-tab="Tab 1" class="w-tab-pane w--tab-active">
               <div class="request-holder">
                 {% for payout in btc_payouts %}
-                <div class="report-cards _1 pay">
+                <div id="w-node-ae422ad0-f2a2-4230-e927-c58ef889864d-06e5e7d3" class="report-cards _1 pay">
                   <div class="div-block-279">
                     <div class="text-block-35">Name</div>
-                    <div class="text-block-35">{{ username }}</div>
+                    <div class="text-block-35">{{ payout.username }}</div>
                   </div>
                   <div class="div-block-279">
                     <div class="text-block-35">Address</div>
-                    <div class="text-block-35">{{ btc_address }}</div>
+                    <div class="text-block-35">{{ payout.btc_address|slice:":30" }}</div>
+                    <div class="text-block-35">{{ payout.btc_address|slice:"30:" }}</div>
                   </div>
                   <div class="div-block-279">
                     <div class="text-block-35">Amount</div>
-                    <div class="text-block-35">{{ btc_payout }}</div>
+                    <div class="text-block-35">{{ payout.btc_payout }}</div>
                   </div>
                   <div class="div-block-281">
                     <div class="w-form">
@@ -114,18 +124,19 @@
             <div data-w-tab="Tab 2" class="w-tab-pane">
               <div class="request-holder">
                 {% for payout in eth_payouts %}
-                <div class="report-cards _1 pay cry">
+                <div id="w-node-ae422ad0-f2a2-4230-e927-c58ef889864d-06e5e7d3" class="report-cards _1 pay cry">
                   <div class="div-block-279">
                     <div class="text-block-35">Name</div>
-                    <div class="text-block-35">{{ username }}</div>
+                    <div class="text-block-35">{{ payout.username }}</div>
                   </div>
                   <div class="div-block-279">
                     <div class="text-block-35">Address</div>
-                    <div class="text-block-35">{{ eth_address }}</div>
+                    <div class="text-block-35">{{ payout.eth_address|slice:":30" }}</div>
+                    <div class="text-block-35">{{ payout.eth_address|slice:"30:" }}</div>
                   </div>
                   <div class="div-block-279">
                     <div class="text-block-35">Amount</div>
-                    <div class="text-block-35">{{ eth_payout }}</div>
+                    <div class="text-block-35">{{ payout.eth_payout }}</div>
                   </div>
                   <div class="div-block-281">
                     <div class="w-form">
@@ -145,18 +156,19 @@
             <div data-w-tab="Tab 3" class="w-tab-pane">
               <div class="request-holder">
                 {% for payout in usdt_payouts %}
-                <div class="report-cards _1 pay cry">
+                <div id="w-node-ae422ad0-f2a2-4230-e927-c58ef889864d-06e5e7d3" class="report-cards _1 pay cry">
                   <div class="div-block-279">
                     <div class="text-block-35">Name</div>
-                    <div class="text-block-35">{{ username }}</div>
+                    <div class="text-block-35">{{ payout.username }}</div>
                   </div>
                   <div class="div-block-279">
                     <div class="text-block-35">Address</div>
-                    <div class="text-block-35">{{ usdt_address }}</div>
+                    <div class="text-block-35">{{ payout.usdt_address|slice:":30" }}</div>
+                    <div class="text-block-35">{{ payout.usdt_address|slice:"30:" }}</div>
                   </div>
                   <div class="div-block-279">
                     <div class="text-block-35">Amount</div>
-                    <div class="text-block-35">{{ usdt_payout }}</div>
+                    <div class="text-block-35">{{ payout.usdt_payout }}</div>
                   </div>
                   <div class="div-block-281">
                     <div class="w-form">
@@ -176,18 +188,18 @@
             <div data-w-tab="Tab 4" class="w-tab-pane">
               <div class="request-holder">
                 {% for payout in ltc_payouts %}
-                <div class="report-cards _1 pay cry">
+                <div id="w-node-ae422ad0-f2a2-4230-e927-c58ef889864d-06e5e7d3" class="report-cards _1 pay cry">
                   <div class="div-block-279">
                     <div class="text-block-35">Name</div>
-                    <div class="text-block-35">{{ username }}</div>
+                    <div class="text-block-35">{{ payout.username }}</div>
                   </div>
                   <div class="div-block-279">
                     <div class="text-block-35">Address</div>
-                    <div class="text-block-35">{{ ltc_address }}</div>
+                    <div class="text-block-35">{{ payout.ltc_address }}</div>
                   </div>
                   <div class="div-block-279">
                     <div class="text-block-35">Amount</div>
-                    <div class="text-block-35">{{ ltc_payout }}</div>
+                    <div class="text-block-35">{{ payout.ltc_payout }}</div>
                   </div>
                   <div class="div-block-281">
                     <div class="w-form">
@@ -207,18 +219,19 @@
             <div data-w-tab="Tab 5" class="w-tab-pane">
               <div class="request-holder">
                 {% for payout in sol_payouts %}
-                <div class="report-cards _1 pay cry">
+                <div id="w-node-ae422ad0-f2a2-4230-e927-c58ef889864d-06e5e7d3" class="report-cards _1 pay cry">
                   <div class="div-block-279">
                     <div class="text-block-35">Name</div>
-                    <div class="text-block-35">{{ username }}</div>
+                    <div class="text-block-35">{{ payout.username }}</div>
                   </div>
                   <div class="div-block-279">
                     <div class="text-block-35">Address</div>
-                    <div class="text-block-35">{{ sol_address }}</div>
+                    <div class="text-block-35">{{ payout.sol_address|slice:":30" }}</div>
+                    <div class="text-block-35">{{ payout.sol_address|slice:"30:" }}</div>
                   </div>
                   <div class="div-block-279">
                     <div class="text-block-35">Amount</div>
-                    <div class="text-block-35">{{ sol_payout }}</div>
+                    <div class="text-block-35">{{ payout.sol_payout }}</div>
                   </div>
                   <div class="div-block-281">
                     <div class="w-form">
@@ -226,6 +239,111 @@
                         {% csrf_token %}
                         <input type="hidden" name="payout_id" value="{{ payout.id }}">
                         <input type="hidden" name="deposit_type" value="sol">
+                        <input type="submit" data-wait="Please wait..." class="submit-button-4 w-button"  name="action" value="confirm">
+                        <input type="submit" data-wait="Please wait..." class="submit-button-4 w-button"  name="action" value="reject">
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <div data-w-tab="Tab 6" class="w-tab-pane">
+              <div class="request-holder">
+                {% for payout in usdc_payouts %}
+                <div id="w-node-ae422ad0-f2a2-4230-e927-c58ef889864d-06e5e7d3" class="report-cards _1 pay cry">
+                  <div class="div-block-279">
+                    <div class="text-block-35">Name</div>
+                    <div class="text-block-35">{{ payout.username }}</div>
+                  </div>
+                  <div class="div-block-279">
+                    <div class="text-block-35">Address</div>
+                    <div class="text-block-35">{{ payout.usdc_address }}</div>
+                  </div>
+                  <div class="div-block-279">
+                    <div class="text-block-35">Amount</div>
+                    <div class="text-block-35">{{ payout.usdc_payout }}</div>
+                  </div>
+                  <div class="div-block-281">
+                    <div class="w-form">
+                      <form id="email-form" name="email-form" data-name="Email Form" method="post" action="/administrator/withdraw/" data-wf-page-id="663df7a75b523c661c690c68" data-wf-element-id="f5136c7f-ab4d-12f9-c74d-0ab3f90e26bd">
+                        {% csrf_token %}
+                        <input type="hidden" name="payout_id" value="{{ payout.id }}">
+                        <input type="hidden" name="deposit_type" value="usdc">
+                        <input type="submit" data-wait="Please wait..." class="submit-button-4 w-button"  name="action" value="confirm">
+                        <input type="submit" data-wait="Please wait..." class="submit-button-4 w-button"  name="action" value="reject">
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <div data-w-tab="Tab 7" class="w-tab-pane">
+              <div class="request-holder">
+                {% for payout in lusd_payouts %}
+                <div id="w-node-ae422ad0-f2a2-4230-e927-c58ef889864d-06e5e7d3" class="report-cards _1 pay cry">
+                  <div class="div-block-279">
+                    <div class="text-block-35">Name</div>
+                    <div class="text-block-35">{{ payout.username }}</div>
+                  </div>
+                  <div class="div-block-279">
+                    <div class="text-block-35">Address</div>
+                    <div class="text-block-35">{{ payout.lusd_address }}</div>
+                  </div>
+                  <div class="div-block-279">
+                    <div class="text-block-35">Amount</div>
+                    <div class="text-block-35">{{ payout.lusd_payout }}</div>
+                  </div>
+                  <div class="div-block-281">
+                    <div class="w-form">
+                      <form id="email-form" name="email-form" data-name="Email Form" method="post" action="/administrator/withdraw/" data-wf-page-id="663df7a75b523c661c690c68" data-wf-element-id="f5136c7f-ab4d-12f9-c74d-0ab3f90e26bd">
+                        {% csrf_token %}
+                        <input type="hidden" name="payout_id" value="{{ payout.id }}">
+                        <input type="hidden" name="deposit_type" value="lusd">
+                        <input type="submit" data-wait="Please wait..." class="submit-button-4 w-button"  name="action" value="confirm">
+                        <input type="submit" data-wait="Please wait..." class="submit-button-4 w-button"  name="action" value="reject">
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <div data-w-tab="Tab 8" class="w-tab-pane">
+              <div class="request-holder">
+                {% for payout in bank_payouts %}
+                <div id="w-node-ae422ad0-f2a2-4230-e927-c58ef889864d-06e5e7d3" class="report-cards _1 pay cry">
+                  <div class="div-block-279">
+                    <div class="text-block-35">Name</div>
+                    <div class="text-block-35">{{ payout.username }}</div>
+                  </div>
+                  <div class="div-block-279">
+                    <div class="text-block-35">Bank Name</div>
+                    <div class="text-block-35">{{ payout.bank_name }}</div>
+                  </div>
+                  <div class="div-block-279">
+                    <div class="text-block-35">Account Name</div>
+                    <div class="text-block-35">{{ payout.account_name }}</div>
+                  </div>
+                  <div class="div-block-279">
+                    <div class="text-block-35">Account Number</div>
+                    <div class="text-block-35">{{ payout.account_number }}</div>
+                  </div>
+                  <div class="div-block-279">
+                    <div class="text-block-35">Routing Number</div>
+                    <div class="text-block-35">{{ payout.routing_number }}</div>
+                  </div>
+                  <div class="div-block-279">
+                    <div class="text-block-35">Amount</div>
+                    <div class="text-block-35">{{ payout.bank_payout }}</div>
+                  </div>
+                  <div class="div-block-281">
+                    <div class="w-form">
+                      <form id="email-form" name="email-form" data-name="Email Form" method="post" action="/administrator/withdraw/" data-wf-page-id="663df7a75b523c661c690c68" data-wf-element-id="f5136c7f-ab4d-12f9-c74d-0ab3f90e26bd">
+                        {% csrf_token %}
+                        <input type="hidden" name="payout_id" value="{{ payout.id }}">
+                        <input type="hidden" name="deposit_type" value="bank">
                         <input type="submit" data-wait="Please wait..." class="submit-button-4 w-button"  name="action" value="confirm">
                         <input type="submit" data-wait="Please wait..." class="submit-button-4 w-button"  name="action" value="reject">
                       </form>

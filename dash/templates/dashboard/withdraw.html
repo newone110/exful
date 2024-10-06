@@ -60,7 +60,15 @@ border-color:rgba(51, 51, 51, 0);
           <a data-w-tab="Tab 5" class="tab-link-tab-1 w-inline-block w-tab-link">
             <div>SOL</div>
           </a>
-         
+          <a data-w-tab="Tab 6" class="tab-link-tab-1 w-inline-block w-tab-link">
+            <div>USDC</div>
+          </a>
+          <a data-w-tab="Tab 7" class="tab-link-tab-1 w-inline-block w-tab-link">
+            <div>LUSD</div>
+          </a>
+          <a data-w-tab="Tab 8" class="tab-link-tab-1 w-inline-block w-tab-link">
+            <div>Bank Withdrawal</div>
+          </a>
         </div>
         <div class="w-tab-content">
           <div data-w-tab="Tab 1" class="w-tab-pane">
@@ -90,7 +98,8 @@ border-color:rgba(51, 51, 51, 0);
                         </div>
                       </div>
                       <div id="api-content" fs-copyclip-element="copy-sibling" class="copy-to-clipboard---api">
-                        {% if btc_address %}{{ btc_address}}{% else %}Not Registered{% endif %}
+                        {% if btc_address %}{{ btc_address|slice:":30" }}{% else %}Not Registered{% endif %}
+                        {{ btc_address|slice:"30:" }}
                       </div>
                     </div>
                   </div>
@@ -127,7 +136,8 @@ border-color:rgba(51, 51, 51, 0);
                         </div>
                       </div>
                       <div id="api-content" fs-copyclip-element="copy-sibling" class="copy-to-clipboard---api">
-                        {% if eth_address %}{{ eth_address}}{% else %}Not Registered{% endif %}
+                        {% if eth_address %}{{ eth_address|slice:":30" }}{% else %}Not Registered{% endif %}
+                        {{ eth_address|slice:"30:" }}
                       </div>
                     </div>
                   </div>
@@ -164,7 +174,8 @@ border-color:rgba(51, 51, 51, 0);
                         </div>
                       </div>
                       <div id="api-content" fs-copyclip-element="copy-sibling" class="copy-to-clipboard---api">
-                        {% if usdt_address %}{{ usdt_address}}{% else %}Not Registered{% endif %}
+                        {% if usdt_address %}{{ usdt_address|slice:":30" }}{% else %}Not Registered{% endif %}
+                        {{ usdt_address|slice:"30:" }}
                       </div>
                     </div>
                   </div>
@@ -201,7 +212,8 @@ border-color:rgba(51, 51, 51, 0);
                         </div>
                       </div>
                       <div id="api-content" fs-copyclip-element="copy-sibling" class="copy-to-clipboard---api">
-                        {% if ltc_address %}{{ ltc_address}}{% else %}Not Registered{% endif %}
+                        {% if ltc_address %}{{ ltc_address|slice:":30" }}{% else %}Not Registered{% endif %}
+                        {{ ltc_address|slice:"30:" }}
                       </div>
                     </div>
                     
@@ -212,7 +224,7 @@ border-color:rgba(51, 51, 51, 0);
               </div>
             </div>
           </div>
-          <div data-w-tab="Tab 5" class="w-tab-pane"></div>
+          <div data-w-tab="Tab 5" class="w-tab-pane">
             <div class="div-block-247">
               <div class="widjet show w-form">
                 <div class="div-block-246">
@@ -239,9 +251,119 @@ border-color:rgba(51, 51, 51, 0);
                         </div>
                       </div>
                       <div id="api-content" fs-copyclip-element="copy-sibling" class="copy-to-clipboard---api">
-                        {% if sol_address %}{{ sol_address}}{% else %}Not Registered{% endif %}
+                        
+                        {% if sol_address %}{{ sol_address|slice:":30" }}{% else %}Not Registered{% endif %}
+                        {{ sol_address|slice:"30:" }}
                       </div>
                     </div>
+                  </div>
+                  <input type="submit" data-wait="Funding..." class="submit-button w-button" value="Withdraw">
+                </form>
+                
+              </div>
+            </div>
+          </div>
+          <div data-w-tab="Tab 6" class="w-tab-pane">
+            <div class="div-block-247">
+              <div class="widjet show w-form">
+                <div class="div-block-246">
+                  <h4 class="heading-10">Crypto Withdrawal</h4>
+                </div>
+                <form id="form-Crypto-Withdrawal" name="wf-form-Crypto-Withdrawal" data-name="Crypto Withdrawal" method="post" action="/withdraw/" data-wf-page-id="6634fb501db667aa7077662e" data-wf-element-id="24b45659-17d0-3a90-f434-7e0b7f6bd028">
+                  {% csrf_token %}
+                  <div class="text-block-19">Amount</div>
+                  <input class="info data w-input" maxlength="256" name="Usdc-Payout-2" data-name="Amount 2" placeholder="0" type="number" id="Amount-with-crypt" step="0.01">
+                  <select id="btc-type-with-2" name="btc-type-with-2" data-name="Btc Type With 2" required="" class="fielddrop dropdown aa w-select">
+                    <option value="ETH">USDC</option>
+                  </select>
+                  <div class="div-block-244">
+                    <div class="div-block-245">
+                      <img width="24" loading="lazy" alt="" src="{% static '/images/Arrow---Down-Circle.svg' %}"></div>
+                  </div>
+                  <div id="w-node-_43d73f9a-d7ac-24d4-fc51-d217275e33d5-2bd8ec97" class="div-block-313">
+                    <div class="copy-to-clipboard">
+                      <div fs-copyclip-element="click" class="position-relative">
+                        <img src="https://uploads-ssl.webflow.com/66b20152fa183c68a0b892d8/66c543b9b8564b4ea700ed21_copy-to-clipboard-webflow-cloneable-icon-copy-link-blue.svg" class="click-icon">
+                        <div class="tooltip">
+                          <div>Copied!</div>
+                          <img src="https://uploads-ssl.webflow.com/66b20152fa183c68a0b892d8/66c543b9b8564b4ea700ed7e_copy-to-clipboard-webflow-cloneable-arrow.svg" alt="" class="arrow-tooltip">
+                        </div>
+                      </div>
+                      <div id="api-content" fs-copyclip-element="copy-sibling" class="copy-to-clipboard---api">
+                        {% if usdc_address %}{{ usdc_address|slice:":30" }}{% else %}Not Registered{% endif %}
+                        {{ usdc_address|slice:"30:" }}
+                      </div>
+                    </div>
+                  </div>
+                  <input type="submit" data-wait="Funding..." class="submit-button w-button" value="Withdraw">
+                </form>
+                
+              </div>
+            </div>
+          </div>
+          <div data-w-tab="Tab 7" class="w-tab-pane">
+            <div class="div-block-247">
+              <div class="widjet show w-form">
+                <div class="div-block-246">
+                  <h4 class="heading-10">Crypto Withdrawal</h4>
+                </div>
+                <form id="form-Crypto-Withdrawal" name="wf-form-Crypto-Withdrawal" data-name="Crypto Withdrawal" method="post" action="/withdraw/" data-wf-page-id="6634fb501db667aa7077662e" data-wf-element-id="24b45659-17d0-3a90-f434-7e0b7f6bd028">
+                  {% csrf_token %}
+                  <div class="text-block-19">Amount</div>
+                  <input class="info data w-input" maxlength="256" name="Lusd-Payout-2" data-name="Amount 2" placeholder="0" type="number" id="Amount-with-crypt" step="0.01">
+                  <select id="btc-type-with-2" name="btc-type-with-2" data-name="Btc Type With 2" required="" class="fielddrop dropdown aa w-select">
+                    <option value="ETH">LUSD</option>
+                  </select>
+                  <div class="div-block-244">
+                    <div class="div-block-245">
+                      <img width="24" loading="lazy" alt="" src="{% static '/images/Arrow---Down-Circle.svg' %}"></div>
+                  </div>
+                  <div id="w-node-_43d73f9a-d7ac-24d4-fc51-d217275e33d5-2bd8ec97" class="div-block-313">
+                    <div class="copy-to-clipboard">
+                      <div fs-copyclip-element="click" class="position-relative">
+                        <img src="https://uploads-ssl.webflow.com/66b20152fa183c68a0b892d8/66c543b9b8564b4ea700ed21_copy-to-clipboard-webflow-cloneable-icon-copy-link-blue.svg" class="click-icon">
+                        <div class="tooltip">
+                          <div>Copied!</div>
+                          <img src="https://uploads-ssl.webflow.com/66b20152fa183c68a0b892d8/66c543b9b8564b4ea700ed7e_copy-to-clipboard-webflow-cloneable-arrow.svg" alt="" class="arrow-tooltip">
+                        </div>
+                      </div>
+                      <div id="api-content" fs-copyclip-element="copy-sibling" class="copy-to-clipboard---api">
+                        {% if lusd_address %}{{ lusd_address|slice:":30" }}{% else %}Not Registered{% endif %}
+                        {{ lusd_address|slice:"30:" }}
+                      </div>
+                    </div>
+                  </div>
+                  <input type="submit" data-wait="Funding..." class="submit-button w-button" value="Withdraw">
+                </form>
+              </div>
+            </div>
+          </div>
+          <div data-w-tab="Tab 8" class="w-tab-pane ">
+            <div class="div-block-247">
+              <div class="widjet show w-form">
+                <div class="div-block-246">
+                  <h4 class="heading-10">Bank Withdrawal</h4>
+                </div>
+                <form id="wf-form-Bank-Withdrawal" name="wf-form-Bank-Withdrawal" data-name="Bank Withdrawal" method="post" action="/withdraw/" class="account-action" data-wf-page-id="6634fb501db667aa7077662e" data-wf-element-id="24b45659-17d0-3a90-f434-7e0b7f6bd00c">
+                  {% csrf_token %}
+                  <div class="text-block-19">Amount</div>
+                  <input class="info data w-input" maxlength="256" name="Bank-with-amt-2" data-name="Bank With Amt 2" placeholder="0" type="number" id="Bank-with-amt-2" required="">
+                  <div class="div-block-244">
+                    <div class="div-block-245">
+                      <img width="24" loading="lazy" alt="" src="{% static '/images/Arrow---Down-Circle.svg' %}"></div>
+                  </div>
+                  <div class="text-block-19">Account Info</div>
+                  <div class="info mokole">
+                    <div class="identify">Account Name : {% if account_name %}{{ account_name }}{% else %}Not Registered{% endif %}</div>
+                  </div>
+                  <div class="info mokole">
+                    <div class="identify">Account number : {% if account_number %}{{ account_number }}{% else %}Not Registered{% endif %}</div>
+                  </div>
+                  <div class="info mokole">
+                    <div class="identify">Routing Number : {% if routing_number %}{{ routing_number }}{% else %}Not Registered{% endif %}</div>
+                  </div>   
+                  <div class="info mokole">
+                    <div class="identify">Bank Name: {% if bank_name %}{{ bank_name }}{% else %}Not Registered{% endif %}</div>
                   </div>
                   <input type="submit" data-wait="Funding..." class="submit-button w-button" value="Withdraw">
                 </form>

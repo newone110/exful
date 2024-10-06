@@ -49,7 +49,7 @@
             <div class="text-block-30">{{ crypto.name }}</div>
           </div>
           <div id="w-node-_3ae22299-337a-9f74-8ee1-098571c43a8e-98c689af" class="div-block-310">
-            <div>${{ crypto.price }}</div>
+            <div>{{ currency }}{{ crypto.price }}</div>
           </div>
           <div id="w-node-_3ae22299-337a-9f74-8ee1-098571c43a91-98c689af" class="pacent {% if crypto.price_change_24h|slice:"0:1" == "+" %}green-p{% else %}red-p{% endif %}">
             <div>{{ crypto.price_change_24h }}</div>
@@ -58,7 +58,7 @@
             <div>{{ crypto.volume_24h }} </div>
           </div>
           <div id="w-node-_3ae22299-337a-9f74-8ee1-098571c43a99-98c689af" class="div-block-310">
-            <div>${{ crypto.market_cap }} </div>
+            <div>{{ currency }}{{ crypto.market_cap }} </div>
           </div>
         </div>
       </div>

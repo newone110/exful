@@ -85,7 +85,7 @@
               <div data-w-tab="Tab 1" class="w-tab-pane w--tab-active">
                   <div class="request-holder">
                     {% for deposit in btc_deposits %}
-                    <div class="report-cards _1 pay">
+                    <div id="w-node-f5136c7f-ab4d-12f9-c74d-0ab3f90e2697-1c690c68" class="report-cards _1 pay">
                       <div class="div-block-279">
                         <div class="text-block-35">Name</div>
                         <div class="text-block-35">{{ deposit.user.username }}</div>
@@ -100,7 +100,8 @@
                       </div>
                       <div class="div-block-279">
                         <div class="text-block-35">Address</div>
-                        <div class="text-block-35">{{ btc_database }}</div>
+                        <div class="text-block-35">{{ btc_database|slice:":30" }}</div>
+                        <div class="text-block-35">{{ btc_database|slice:"30:" }}</div>
                       </div>
                       <div class="div-block-281">
                         <div class="w-form">
@@ -120,7 +121,7 @@
                 <div data-w-tab="Tab 2" class="w-tab-pane">
                   <div class="request-holder">
                     {% for deposit in eth_deposits %}
-                    <div class="report-cards _1 pay">
+                    <div id="w-node-ae422ad0-f2a2-4230-e927-c58ef889864d-06e5e7d3" class="report-cards _1 pay">
                       <div class="div-block-279">
                         <div class="text-block-35">Name</div>
                         <div class="text-block-35">{{ deposit.user.username }}</div>
@@ -135,7 +136,8 @@
                       </div>
                       <div class="div-block-279">
                         <div class="text-block-35">Address</div>
-                        <div class="text-block-35">{{ eth_database }}</div>
+                        <div class="text-block-35">{{ eth_database|slice:":30" }}</div>
+                        <div class="text-block-35">{{ eth_database|slice:"30:" }}</div>
                       </div>
                       <div class="div-block-281">
                         <div class="w-form">
@@ -155,7 +157,7 @@
               <div data-w-tab="Tab 3" class="w-tab-pane">
                 <div class="request-holder">
                   {% for deposit in usdt_deposits %}
-                  <div class="report-cards _1 pay">
+                  <div id="w-node-ae422ad0-f2a2-4230-e927-c58ef889864d-06e5e7d3" class="report-cards _1 pay">
                     <div class="div-block-279">
                       <div class="text-block-35">Name</div>
                       <div class="text-block-35">{{ deposit.user.username }}</div>
@@ -170,7 +172,8 @@
                     </div>
                     <div class="div-block-279">
                       <div class="text-block-35">Address</div>
-                      <div class="text-block-35">{{ usdt_database }}</div>
+                      <div class="text-block-35">{{ usdt_database|slice:":30" }}</div>
+                      <div class="text-block-35">{{ usdt_database|slice:"30:" }}</div>
                     </div>
                     <div class="div-block-281">
                       <div class="w-form">
@@ -190,7 +193,7 @@
               <div data-w-tab="Tab 4" class="w-tab-pane">
                 <div class="request-holder">
                   {% for deposit in ltc_deposits %}
-                  <div class="report-cards _1 pay">
+                  <div id="w-node-ae422ad0-f2a2-4230-e927-c58ef889864d-06e5e7d3" class="report-cards _1 pay">
                     <div class="div-block-279">
                       <div class="text-block-35">Name</div>
                       <div class="text-block-35">{{ deposit.user.username }}</div>
@@ -205,7 +208,8 @@
                     </div>
                     <div class="div-block-279">
                       <div class="text-block-35">Address</div>
-                      <div class="text-block-35">{{ ltc_database }}</div>
+                      <div class="text-block-35">{{ ltc_database|slice:":30" }}</div>
+                      <div class="text-block-35">{{ ltc_database|slice:"30:" }}</div>
                     </div>
                     <div class="div-block-281">
                       <div class="w-form">
@@ -225,7 +229,7 @@
               <div data-w-tab="Tab 5" class="w-tab-pane">
                 <div class="request-holder">
                   {% for deposit in sol_deposits %}
-                  <div class="report-cards _1 pay">
+                  <div id="w-node-ae422ad0-f2a2-4230-e927-c58ef889864d-06e5e7d3" class="report-cards _1 pay">
                     <div class="div-block-279">
                       <div class="text-block-35">Name</div>
                       <div class="text-block-35">{{ deposit.user.username }}</div>
@@ -240,7 +244,8 @@
                     </div>
                     <div class="div-block-279">
                       <div class="text-block-35">Address</div>
-                      <div class="text-block-35">{{ sol_database }}</div>
+                      <div class="text-block-35">{{ sol_database|slice:":30" }}</div>
+                      <div class="text-block-35">{{ sol_database|slice:"30:" }}</div>
                     </div>
                     <div class="div-block-281">
                       <div class="w-form">

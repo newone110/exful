@@ -7,6 +7,31 @@ def generate_deposit_id():
     return f"BD-{uuid.uuid4().hex[:6].upper()}"
 
 
+
+class Contact(models.Model):
+      email = models.CharField(max_length=255,null=True, default=None)
+      phone = models.CharField(max_length=255,null=True, default=None)
+      message = models.CharField(max_length=255,null=True, default=None)
+    
+
+class ExtendUser(models.Model):
+      user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+      firstname = models.CharField(max_length=255,null=True, default=None)
+      lastname = models.CharField(max_length=255,null=True, default=None)
+      password = models.CharField(max_length=255,null=True, default=None)
+      country = models.CharField(max_length=255,null=True, default=None)
+      currency = models.CharField(max_length=255,null=True, default=None)
+
+      def get_currency_symbol(self):
+        currency_symbols = {
+            'EUR': '€',
+            'GBP': '£',
+            'AUD': 'AU$',
+            'USD': '$'
+        }
+        return currency_symbols.get(self.currency, '')
+    
+
 class OTPCode(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     otp_code = models.CharField(max_length=6, unique=True)
@@ -45,6 +70,12 @@ class UserDatabase(models.Model):
     usdt_address =  models.CharField(max_length=45, null=True, default=None)
     ltc_address = models.CharField(max_length=45, null=True, default=None)
     sol_address = models.CharField(max_length=45, null=True, default=None)
+    usdc_address = models.CharField(max_length=45, null=True, default=None)
+    lusd_address = models.CharField(max_length=45, null=True, default=None)
+    account_name = models.CharField(max_length=255, default='New User', help_text='The name on your bank account')
+    account_number = models.CharField(max_length=20, default='00000000', help_text='Your bank account number')
+    routing_number = models.CharField(max_length=20, default='00000000', help_text='Your bank routing number')
+    bank_name = models.CharField(max_length=255, default='Federal Bank (default)', help_text='Your house address')
     trader = models.ForeignKey(NewTrader, on_delete=models.SET_DEFAULT, null=True, default=None)
     bot_plans  = models.CharField(max_length=10, null=True, default=None, choices=[
         ('bronze', 'Bronze'),
@@ -198,5 +229,37 @@ class SolPayout(models.Model):
         ('approved', 'Approved'),
         ('rejected', 'Rejected')
     ])
+        
+class UsdcPayout(models.Model):
+        id = models.CharField(max_length=36, primary_key=True, default=generate_deposit_id, editable=False)
+        user = models.ForeignKey(User, on_delete=models.CASCADE)
+        method_of_crypto = models.CharField(max_length=20, default='USDC')
+        usdc_payout = models.FloatField()
+        status = models.CharField(max_length=10, default='pending', choices=[
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected')
+    ])
+
+class LusdPayout(models.Model):
+        id = models.CharField(max_length=36, primary_key=True, default=generate_deposit_id, editable=False)
+        user = models.ForeignKey(User, on_delete=models.CASCADE)
+        method_of_crypto = models.CharField(max_length=20, default='LUSD')
+        lusd_payout = models.FloatField()
+        status = models.CharField(max_length=10, default='pending', choices=[
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected')
+    ])
 
 
+class BankPayout(models.Model):
+        id = models.CharField(max_length=36, primary_key=True, default=generate_deposit_id, editable=False)
+        user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+        method_of_payment = models.CharField(max_length=20, default='Bank')
+        bank_payout = models.FloatField()
+        status = models.CharField(max_length=10, default='pending', choices=[
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected')
+    ])

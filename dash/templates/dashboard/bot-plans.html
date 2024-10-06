@@ -74,36 +74,39 @@ background:rgb(255, 255, 255);
 }
 </style>
     </div>
-    <nav data-w-id="e8581429-10be-cc33-0e89-dbfc606c83e7" class="nav">
+    <nav class="nav light">
       <div class="nav-wrap">
         <div class="nav-top">
           <a href="#" class="logo-link w-inline-block">
             <h1 class="heading-34">EXful</h1>
           </a>
-          <div class="profile-wrap"><img src="{% static '/images/profile-img_1profile-img.jpg' %}" loading="lazy" alt="" class="profile-img">
+          <div class="profile-wrap"><img src="{% static 'images/profile-img_1profile-img.jpg' %}" loading="lazy" alt="" class="profile-img">
             <p class="paragraph-2">{% if username %}{{ username }}{% else %}Stranger{% endif %}</p>
           </div>
           <div class="nav-menu mb-10">
-            <a href="/dashboard/" class="nav-link actave w-inline-block"><img src="{% static '/images/Home.svg' %}" loading="lazy" alt="" class="image-12">
-              <p class="paragraph-3">Overview</p>
+            <a href="/dashboard/" aria-current="page" class="nav-link actave w-inline-block w--current"><img src="{% static 'images/Home.svg' %}" loading="lazy" alt="" class="nimg">
+              <p class="nvh">Overview</p>
             </a>
             <a href="/wallet/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Wallet</p><img src="{% static '/images/Wallet.svg' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Wallet</p><img src="{% static 'images/Wallet.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
             <a href="/trade/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Trade</p><img src="{% static '/images/Activity.svg' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Trade</p><img src="{% static 'images/Activity.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
             <a href="/market/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Market</p><img src="{% static '/images/Chart_1.svg' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Market</p><img src="{% static 'images/Chart_1.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
             <a href="/news/" class="nav-link w-inline-block">
-              <p class="paragraph-3">News</p><img src="{% static 'images/Discovery.svg' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">News</p><img src="{% static 'images/Discovery.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
             <a href="/bot_plan/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Trading Plans</p><img src="{% static 'images/bot.png' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Bot Plan</p><img src="{% static 'images/bot.png' %}" loading="lazy" alt="" class="nimg">
             </a>
             <a href="/current-plans/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Current Plan</p><img src="{% static '/images/Graph.svg' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Current Plan</p><img src="{% static 'images/Graph.svg' %}" loading="lazy" alt="" class="nimg">
+            </a>
+            <a href="/accountsettings/" class="nav-link w-inline-block">
+              <p class="nvh">Settings</p><img src="{% static 'images/Setting.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
           </div>
         </div>
@@ -133,7 +136,7 @@ background:rgb(255, 255, 255);
       </div>
     </div>
     <div class="content-2">
-      <div class="content-left lll">
+      <div class="content-left">
         <div class="div-block-242">
           <div class="container-default-2 w-container">
             <div data-w-id="1a2cd0a8-c836-7d4e-a00a-e9393903b640" style="-webkit-transform:translate3d(0, 10%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 10%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 10%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 10%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="inner-container _700px center">
@@ -150,24 +153,24 @@ background:rgb(255, 255, 255);
                       <h3>Bronze Package</h3>
                     </div>
                     <div class="flex-horizontal start">
-                      <div class="heading-h1-size mg-right-8px">$100</div>
+                      <div class="heading-h1-size mg-right-8px">{{currency}}100</div>
                     </div>
                   </div>
                   <div class="w-layout-grid grid-1-column gap-row-16px">
                     <div class="icon-list-item-wrapper"><img alt="" src="{% static 'images/check-icon-brix-templates.svg' %}" class="icon-list">
-                      <div class="text-200 bold color-neutral-800 list">Minimum Possible Deposit - $50</div>
+                      <div class="text-200 bold color-neutral-800 list">Minimum Possible Deposit - {{currency}}50</div>
                     </div>
                     <div class="icon-list-item-wrapper"><img alt="" src="{% static 'images/check-icon-brix-templates.svg' %}" class="icon-list">
-                      <div class="text-200 bold color-neutral-800 list">Maximum Possible Deposit - $500</div>
+                      <div class="text-200 bold color-neutral-800 list">Maximum Possible Deposit - {{currency}}500</div>
                     </div>
                     <div class="icon-list-item-wrapper"><img alt="" src="{% static 'images/check-icon-brix-templates.svg' %}" class="icon-list">
-                      <div class="text-200 bold color-neutral-800 list">Minimum Return - $2500</div>
+                      <div class="text-200 bold color-neutral-800 list">Minimum Return - {{currency}}2500</div>
                     </div>
                     <div id="w-node-_75b89577-e3e9-d05b-5d9b-f6ed3e1b990a-b3e67959" class="icon-list-item-wrapper"><img alt="" src="{% static 'images/check-icon-brix-templates.svg' %}" class="icon-list">
-                      <div class="text-200 bold color-neutral-800 list">Maximum Return - $3000</div>
+                      <div class="text-200 bold color-neutral-800 list">Maximum Return - {{currency}}3000</div>
                     </div>
                     <div id="w-node-_893a421b-3653-010d-064f-e98d336802f1-b3e67959" class="icon-list-item-wrapper"><img alt="" src="{% static 'images/check-icon-brix-templates.svg' %}" class="icon-list">
-                      <div class="text-200 bold color-neutral-800 list">Gift Bonus $0</div>
+                      <div class="text-200 bold color-neutral-800 list">Gift Bonus {{currency}}0</div>
                     </div>
                     <div id="w-node-_319c3bc1-abf9-e2bb-7790-d621c9042f04-b3e67959" class="icon-list-item-wrapper"><img alt="" src="{% static 'images/check-icon-brix-templates.svg' %}" class="icon-list">
                       <div class="text-200 bold color-neutral-800 list">Duration 7 days</div>
@@ -190,19 +193,19 @@ background:rgb(255, 255, 255);
                   </div>
                   <div class="w-layout-grid grid-1-column gap-row-16px">
                     <div class="icon-list-item-wrapper"><img alt="" src="{% static 'images/check-icon-brix-templates.svg' %}" class="icon-list">
-                      <div class="text-200 bold color-neutral-800 list">Minimum Possible Deposit - $600</div>
+                      <div class="text-200 bold color-neutral-800 list">Minimum Possible Deposit - {{currency}}600</div>
                     </div>
                     <div class="icon-list-item-wrapper"><img alt="" src="{% static 'images/check-icon-brix-templates.svg' %}" class="icon-list">
-                      <div class="text-200 bold color-neutral-800 list">Maximum Possible Deposit - $2000</div>
+                      <div class="text-200 bold color-neutral-800 list">Maximum Possible Deposit - {{currency}}2000</div>
                     </div>
                     <div class="icon-list-item-wrapper"><img alt="" src="{% static 'images/check-icon-brix-templates.svg' %}" class="icon-list">
-                      <div class="text-200 bold color-neutral-800 list">Minimum Return - $8000</div>
+                      <div class="text-200 bold color-neutral-800 list">Minimum Return - {{currency}}8000</div>
                     </div>
                     <div id="w-node-c4ff0183-ed02-e9ac-8f26-fa44e03a3ca1-b3e67959" class="icon-list-item-wrapper"><img alt="" src="{% static 'images/check-icon-brix-templates.svg' %}" class="icon-list">
-                      <div class="text-200 bold color-neutral-800 list">Maximum Return - $10000</div>
+                      <div class="text-200 bold color-neutral-800 list">Maximum Return - {{currency}}10000</div>
                     </div>
                     <div id="w-node-_035a0414-a070-9336-8d79-2bfb0d87d259-b3e67959" class="icon-list-item-wrapper"><img alt="" src="{% static 'images/check-icon-brix-templates.svg' %}" class="icon-list">
-                      <div class="text-200 bold color-neutral-800 list">Gift Bonus $0</div>
+                      <div class="text-200 bold color-neutral-800 list">Gift Bonus {{currency}}0</div>
                     </div>
                     <div id="w-node-_1838086e-3d3a-ad35-d706-429a63ceb4f7-b3e67959" class="icon-list-item-wrapper"><img alt="" src="{% static 'images/check-icon-brix-templates.svg' %}" class="icon-list">
                       <div class="text-200 bold color-neutral-800 list">Duration 2 weeks</div>
@@ -220,24 +223,24 @@ background:rgb(255, 255, 255);
                       <h3 class="color-neutral-100">Enterprise</h3>
                     </div>
                     <div class="flex-horizontal start">
-                      <div class="heading-h1-size mg-right-8px color-neutral-100">$2500</div>
+                      <div class="heading-h1-size mg-right-8px color-neutral-100">{{currency}}2500</div>
                     </div>
                   </div>
                   <div class="w-layout-grid grid-1-column gap-row-16px">
                     <div class="icon-list-item-wrapper"><img alt="" src="{% static 'images/check-icon-white-brix-templates.svg' %}" class="icon-list">
-                      <div class="text-200 bold color-neutral-800 list">Minimum Possible Deposit - $2100</div>
+                      <div class="text-200 bold color-neutral-800 list">Minimum Possible Deposit - {{currency}}2100</div>
                     </div>
                     <div class="icon-list-item-wrapper"><img alt="" src="{% static 'images/check-icon-white-brix-templates.svg' %}" class="icon-list">
-                      <div class="text-200 bold color-neutral-800 list">Maximum Possible Deposit - $10500</div>
+                      <div class="text-200 bold color-neutral-800 list">Maximum Possible Deposit - {{currency}}10500</div>
                     </div>
                     <div class="icon-list-item-wrapper"><img alt="" src="{% static 'images/check-icon-white-brix-templates.svg' %}" class="icon-list">
-                      <div class="text-200 bold color-neutral-800 list">Minimum Return - $15000</div>
+                      <div class="text-200 bold color-neutral-800 list">Minimum Return - {{currency}}15000</div>
                     </div>
                     <div class="icon-list-item-wrapper"><img alt="" src="{% static 'images/check-icon-white-brix-templates.svg' %}" class="icon-list">
-                      <div class="text-200 bold color-neutral-800 list">Maximum Return - $150000</div>
+                      <div class="text-200 bold color-neutral-800 list">Maximum Return - {{currency}}150000</div>
                     </div>
                     <div class="icon-list-item-wrapper"><img alt="" src="{% static 'images/check-icon-white-brix-templates.svg' %}" class="icon-list">
-                      <div class="text-200 bold color-neutral-800 list">Gift Bonus $0</div>
+                      <div class="text-200 bold color-neutral-800 list">Gift Bonus {{currency}}0</div>
                     </div>
                     <div class="icon-list-item-wrapper"><img alt="" src="{% static 'images/check-icon-white-brix-templates.svg' %}" class="icon-list">
                       <div class="text-200 bold color-neutral-800 list">Duration 1 month</div>

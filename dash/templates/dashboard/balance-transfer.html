@@ -37,12 +37,11 @@ border-color:rgba(51, 51, 51, 0);
   <script defer="" src="https://cdn.jsdelivr.net/npm/@finsweet/attributes-selectcustom@1/selectcustom.js"></script>
 </head>
 <body>
-  <div class="deposit see dd ka">
-    {% for message in messages %}
-          <div class="div-block-311 w-inline-block">
+  {% for message in messages %}
               <div class="text-block-41"><strong>{{ message }}</strong></div>
           </div>
           {% endfor %}
+  <div class="deposit see dd ka">
     <div class="div-block-242 wallet">
       <h1 class="heading-9">Move funds</h1>
       <div data-current="Tab 2" data-easing="ease" data-duration-in="300" data-duration-out="100" class="tabs-5 w-tabs">

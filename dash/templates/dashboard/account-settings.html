@@ -48,36 +48,36 @@ background:rgb(255, 255, 255);
 }
 </style>
     </div>
-    <nav data-w-id="e8581429-10be-cc33-0e89-dbfc606c83e7" class="nav">
+    <nav class="nav light">
       <div class="nav-wrap">
         <div class="nav-top">
           <a href="#" class="logo-link w-inline-block">
             <h1 class="heading-34">EXful</h1>
           </a>
-          <div class="profile-wrap"><img src="{% static '/images/profile-img_1profile-img.jpg' %}" loading="lazy" alt="" class="profile-img">
+          <div class="profile-wrap"><img src="{% static 'images/profile-img_1profile-img.jpg' %}" loading="lazy" alt="" class="profile-img">
             <p class="paragraph-2">{% if username %}{{ username }}{% else %}Stranger{% endif %}</p>
           </div>
           <div class="nav-menu mb-10">
-            <a href="/dashboard/" class="nav-link actave w-inline-block"><img src="{% static '/images/Home.svg' %}" loading="lazy" alt="" class="image-12">
-              <p class="paragraph-3">Overview</p>
+            <a href="/dashboard/" aria-current="page" class="nav-link actave w-inline-block w--current"><img src="{% static 'images/Home.svg' %}" loading="lazy" alt="" class="nimg">
+              <p class="nvh">Overview</p>
             </a>
             <a href="/wallet/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Wallet</p><img src="{% static '/images/Wallet.svg' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Wallet</p><img src="{% static 'images/Wallet.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
-            <a href="../dashboard/trade.html" class="nav-link w-inline-block">
-              <p class="paragraph-3">Trade</p><img src="{% static '/images/Activity.svg' %}" loading="lazy" alt="" class="image-12">
+            <a href="/trade/" class="nav-link w-inline-block">
+              <p class="nvh">Trade</p><img src="{% static 'images/Activity.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
             <a href="/market/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Market</p><img src="{% static '/images/Chart_1.svg' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Market</p><img src="{% static 'images/Chart_1.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
             <a href="/news/" class="nav-link w-inline-block">
-              <p class="paragraph-3">News</p><img src="{% static 'images/Discovery.svg' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">News</p><img src="{% static 'images/Discovery.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
             <a href="/bot_plan/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Trading Plans</p><img src="{% static 'images/bot.png' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Bot Plan</p><img src="{% static 'images/bot.png' %}" loading="lazy" alt="" class="nimg">
             </a>
             <a href="/current-plans/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Current Plan</p><img src="{% static '/images/Graph.svg' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Current Plan</p><img src="{% static 'images/Graph.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
           </div>
         </div>
@@ -131,6 +131,25 @@ background:rgb(255, 255, 255);
             </div>
             <div class="w-tab-content">
               <div data-w-tab="Tab 1" class="hir w-tab-pane w--tab-active">
+                <h1 class="dndi">Bank</h1>
+                <div class="div-block-312">
+                  <div id="w-node-_57630953-698f-9bf4-3618-404073ace50e-2bd8ec97" class="div-block-313">
+                    <div class="text-block-42">Account Name<br></div>
+                    <div class="text-block-43">{% if account_name %}{{ account_name}}{% else %}Not Registered{% endif %}</div>
+                  </div>
+                  <div id="w-node-_05aeb5c9-489f-44b6-ee05-17133f66a61d-2bd8ec97" class="div-block-313">
+                    <div class="text-block-42">Account number<br></div>
+                    <div class="text-block-43">{% if account_number %}{{ account_number}}{% else %}Not Registered{% endif %}</div>
+                  </div>
+                  <div id="w-node-_2314539c-3fa3-ca59-5bf2-b0e3cb935706-2bd8ec97" class="div-block-313">
+                    <div class="text-block-42">Routing Number<br></div>
+                    <div class="text-block-43">{% if routing_number%}{{ routing_number}}{% else %}Not Registered{% endif %}</div>
+                  </div>
+                  <div id="w-node-_0d88c60e-36dc-cbf0-561f-65e91821b957-2bd8ec97" class="div-block-313">
+                    <div class="text-block-42">Bank Name<br></div>
+                    <div class="text-block-43">{% if bank_name %}{{ bank_name}}{% else %}Not Registered{% endif %}</div>
+                  </div>
+                </div>
                 
                 <h1 class="dndi">Crypto Wallet</h1>
                 <div class="div-block-312 cffe">
@@ -140,7 +159,8 @@ background:rgb(255, 255, 255);
                   </div>
                   <div id="w-node-_43d73f9a-d7ac-24d4-fc51-d217275e33d5-2bd8ec97" class="div-block-313">
                     <div class="text-block-42">BTC Address<br></div>
-                    <div class="text-block-43">{% if btc_address %}{{ btc_address}}{% else %}Not Registered{% endif %}</div>
+                    <div class="text-block-43">{% if btc_address %}{{ btc_address|slice:":30" }}{% else %}Not Registered{% endif %}</div>
+                    <div class="text-block-43">{{ btc_address|slice:"30:" }}</div>
                   </div>
                   <div id="w-node-_43d73f9a-d7ac-24d4-fc51-d217275e33d5-2bd8ec97" class="div-block-313">
                     <div class="text-block-42">Asset<br></div>
@@ -148,7 +168,8 @@ background:rgb(255, 255, 255);
                   </div>
                   <div id="w-node-_43d73f9a-d7ac-24d4-fc51-d217275e33d5-2bd8ec97" class="div-block-313">
                     <div class="text-block-42">ETH Address<br></div>
-                    <div class="text-block-43">{% if eth_address %}{{ eth_address}}{% else %}Not Registered{% endif %}</div>
+                    <div class="text-block-43">{% if eth_address %}{{ eth_address|slice:":30" }}{% else %}Not Registered{% endif %}</div>
+                    <div class="text-block-43">{{ eth_address|slice:"30:" }}</div>
                   </div>
                   <div id="w-node-_43d73f9a-d7ac-24d4-fc51-d217275e33d5-2bd8ec97" class="div-block-313">
                     <div class="text-block-42">Asset<br></div>
@@ -156,7 +177,8 @@ background:rgb(255, 255, 255);
                   </div>
                   <div id="w-node-_43d73f9a-d7ac-24d4-fc51-d217275e33d5-2bd8ec97" class="div-block-313">
                     <div class="text-block-42">USDT Address<br></div>
-                    <div class="text-block-43">{% if usdt_address %}{{ usdt_address}}{% else %}Not Registered{% endif %}</div>
+                    <div class="text-block-43">{% if usdt_address %}{{ usdt_address|slice:":30" }}{% else %}Not Registered{% endif %}</div>
+                    <div class="text-block-43">{{ usdt_address|slice:"30:" }}</div>
                   </div>
                   <div id="w-node-_43d73f9a-d7ac-24d4-fc51-d217275e33d5-2bd8ec97" class="div-block-313">
                     <div class="text-block-42">Asset<br></div>
@@ -164,7 +186,8 @@ background:rgb(255, 255, 255);
                   </div>
                   <div id="w-node-_43d73f9a-d7ac-24d4-fc51-d217275e33d5-2bd8ec97" class="div-block-313">
                     <div class="text-block-42">LTC Address<br></div>
-                    <div class="text-block-43">{% if ltc_address %}{{ ltc_address}}{% else %}Not Registered{% endif %}</div>
+                    <div class="text-block-43">{% if ltc_address %}{{ ltc_address|slice:":30" }}{% else %}Not Registered{% endif %}</div>
+                    <div class="text-block-43">{{ ltc_address|slice:"30:" }}</div>
                   </div>
                   <div id="w-node-_43d73f9a-d7ac-24d4-fc51-d217275e33d5-2bd8ec97" class="div-block-313">
                     <div class="text-block-42">Asset<br></div>
@@ -172,7 +195,26 @@ background:rgb(255, 255, 255);
                   </div>
                   <div id="w-node-_43d73f9a-d7ac-24d4-fc51-d217275e33d5-2bd8ec97" class="div-block-313">
                     <div class="text-block-42">SOL Address<br></div>
-                    <div class="text-block-43">{% if sol_address %}{{ sol_address}}{% else %}Not Registered{% endif %}</div>
+                    <div class="text-block-43">{% if sol_address %}{{ sol_address|slice:":30" }}{% else %}Not Registered{% endif %}</div>
+                    <div class="text-block-43">{{ sol_address|slice:"30:" }}</div>
+                  </div>
+                  <div id="w-node-_43d73f9a-d7ac-24d4-fc51-d217275e33d5-2bd8ec97" class="div-block-313">
+                    <div class="text-block-42">Asset<br></div>
+                    <div class="text-block-43">USDC</div>
+                  </div>
+                  <div id="w-node-_43d73f9a-d7ac-24d4-fc51-d217275e33d5-2bd8ec97" class="div-block-313">
+                    <div class="text-block-42">USDC Address<br></div>
+                    <div class="text-block-43">{% if usdc_address %}{{ usdc_address|slice:":30" }}{% else %}Not Registered{% endif %}</div>
+                    <div class="text-block-43">{{ usdc_address|slice:"30:" }}</div>
+                  </div>
+                  <div id="w-node-_43d73f9a-d7ac-24d4-fc51-d217275e33d5-2bd8ec97" class="div-block-313">
+                    <div class="text-block-42">Asset<br></div>
+                    <div class="text-block-43">LUSD</div>
+                  </div>
+                  <div id="w-node-_43d73f9a-d7ac-24d4-fc51-d217275e33d5-2bd8ec97" class="div-block-313">
+                    <div class="text-block-42">LUSD Address<br></div>
+                    <div class="text-block-43">{% if lusd_address %}{{ lusd_address|slice:":30" }}{% else %}Not Registered{% endif %}</div>
+                    <div class="text-block-43">{{ lusd_address|slice:"30:" }}</div>
                   </div>
                 </div>
                 
@@ -187,6 +229,18 @@ background:rgb(255, 255, 255);
                   <div id="w-node-_70653458-f071-4f68-d7d8-dd0684b08228-2bd8ec97" class="div-block-313">
                     <div class="text-block-42">Email</div>
                     <div class="text-block-43">{{ emails }}</div>
+                  </div>
+                  <div id="w-node-_70653458-f071-4f68-d7d8-dd0684b08228-2bd8ec97" class="div-block-313">
+                    <div class="text-block-42">First Name</div>
+                    <div class="text-block-43">{{ extend.firstname }}</div>
+                  </div>
+                  <div id="w-node-_70653458-f071-4f68-d7d8-dd0684b08228-2bd8ec97" class="div-block-313">
+                    <div class="text-block-42">Last Name</div>
+                    <div class="text-block-43">{{ extend.lastname }}</div>
+                  </div>
+                  <div id="w-node-_70653458-f071-4f68-d7d8-dd0684b08228-2bd8ec97" class="div-block-313">
+                    <div class="text-block-42">Country</div>
+                    <div class="text-block-43">{{ extend.country }}</div>
                   </div>
                   <div id="w-node-_70653458-f071-4f68-d7d8-dd0684b0822d-2bd8ec97" class="div-block-313">
                     <div class="text-block-42">Password</div>
@@ -214,6 +268,12 @@ background:rgb(255, 255, 255);
                   <div data-w-tab="Tab 1" class="w-tab-pane w--tab-active">
                     
                     <h1 class="dndi">Crypto Wallet</h1>
+                    <div class="div-block-312 ll">
+                      <input class="div-block-313 _33w w-input" maxlength="256" name="Account-Name" data-name="Account Name 3" placeholder="Account Name" type="text" id="user-Account-Name">
+                      <input class="div-block-313 _33w w-node-_33dd9737-b635-b38a-88f6-f32900d9d01f-2bd8ec97 w-input" maxlength="256" name="Account-Number" data-name="Account number" placeholder="Account number" type="text" id="user-Account-number">
+                      <input class="div-block-313 _33w w-node-_50e87fe0-fb63-e632-9718-e946aec0f7fe-2bd8ec97 w-input" maxlength="256" name="Routing-Number" data-name="Routing Number" placeholder="Routing Number" type="text" id="user-Routing-Number">
+                      <input class="div-block-313 _33w w-node-_39359b2c-e9f1-8bd4-f0a5-7976277ff97d-2bd8ec97 w-input" maxlength="256" name="Bank-Name" data-name="Bank Address" placeholder="Bank Name" type="text" id="user-Bank-Address">
+                    </div>
                     <div class="div-block-312 ll">
                       <div id="w-node-_43d73f9a-d7ac-24d4-fc51-d217275e33d5-2bd8ec97" class="div-block-313">
                         <div class="text-block-42">Asset<br></div>
@@ -244,6 +304,18 @@ background:rgb(255, 255, 255);
                         <div class="text-block-43">SOL</div>
                       </div>
                       <input class="div-block-313 _33w w-node-c360ef77-1412-26e9-d799-b39ee90548c1-2bd8ec97 w-input" maxlength="256" name="SOL-Address" data-name="Wallet Address" placeholder="Wallet Address" type="text" id="user-Wallet-Address">
+                    
+                      <div id="w-node-_43d73f9a-d7ac-24d4-fc51-d217275e33d5-2bd8ec97" class="div-block-313">
+                        <div class="text-block-42">Asset<br></div>
+                        <div class="text-block-43">USDC</div>
+                      </div>
+                      <input class="div-block-313 _33w w-node-c360ef77-1412-26e9-d799-b39ee90548c1-2bd8ec97 w-input" maxlength="256" name="USDC-Address" data-name="Wallet Address" placeholder="Wallet Address" type="text" id="user-Wallet-Address">
+                    
+                      <div id="w-node-_43d73f9a-d7ac-24d4-fc51-d217275e33d5-2bd8ec97" class="div-block-313">
+                        <div class="text-block-42">Asset<br></div>
+                        <div class="text-block-43">LUSD</div>
+                      </div>
+                      <input class="div-block-313 _33w w-node-c360ef77-1412-26e9-d799-b39ee90548c1-2bd8ec97 w-input" maxlength="256" name="LUSD-Address" data-name="Wallet Address" placeholder="Wallet Address" type="text" id="user-Wallet-Address">
                     </div>
                     
                   </div>

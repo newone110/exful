@@ -73,70 +73,75 @@
               <div class="w-tab-content">
                 <div data-w-tab="Tab 1" class="w-tab-pane w--tab-active">
                   <div class="request-holder">
-                    <div class="report-cards _1 pay">
+                    <div id="w-node-ae422ad0-f2a2-4230-e927-c58ef889864d-06e5e7d3" class="report-cards _1 pay">
                       <div class="div-block-279">
                         <div class="text-block-35">Asset</div>
                         <div class="text-block-35">BTC</div>
                       </div>
                       <div class="div-block-279">
                         <div class="text-block-35">Address</div>
-                        <div class="text-block-35">{% if btc_address %}{{ btc_address}}{% else %}Not Registered{% endif %}</div>
+                        <div class="text-block-35">{% if btc_address %}{{ btc_address|slice:":30" }}{% else %}Not Registered{% endif %}</div>
+                        <div class="text-block-35">{{ btc_address|slice:"30:" }}</div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div data-w-tab="Tab 2" class="w-tab-pane">
                   <div class="request-holder">
-                    <div class="report-cards _1 pay cry">
+                    <div id="w-node-ae422ad0-f2a2-4230-e927-c58ef889864d-06e5e7d3" class="report-cards _1 pay cry">
                       <div class="div-block-279">
                         <div class="text-block-35">Asset</div>
                         <div class="text-block-35">ETH</div>
                       </div>
                       <div class="div-block-279">
                         <div class="text-block-35">Address</div>
-                        <div class="text-block-35">{% if eth_address %}{{ eth_address}}{% else %}Not Registered{% endif %}</div>
+                        <div class="text-block-35">{% if eth_address %}{{ eth_address|slice:":30" }}{% else %}Not Registered{% endif %}</div>
+                        <div class="text-block-35">{{ eth_address|slice:"30:" }}</div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div data-w-tab="Tab 3" class="w-tab-pane">
                   <div class="request-holder">
-                    <div class="report-cards _1 pay">
+                    <div id="w-node-ae422ad0-f2a2-4230-e927-c58ef889864d-06e5e7d3" class="report-cards _1 pay">
                       <div class="div-block-279">
                         <div class="text-block-35">Asset</div>
                         <div class="text-block-35">USDT(TRC-20)</div>
                       </div>
                       <div class="div-block-279">
                         <div class="text-block-35">Address</div>
-                        <div class="text-block-35">{% if usdt_address %}{{ usdt_address}}{% else %}Not Registered{% endif %}</div>
+                        <div class="text-block-35">{% if usdt_address %}{{ usdt_address|slice:":30" }}{% else %}Not Registered{% endif %}</div>
+                        <div class="text-block-35">{{ usdt_address|slice:"30:" }}</div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div data-w-tab="Tab 4" class="w-tab-pane">
                   <div class="request-holder">
-                    <div class="report-cards _1 pay">
+                    <div id="w-node-ae422ad0-f2a2-4230-e927-c58ef889864d-06e5e7d3" class="report-cards _1 pay">
                       <div class="div-block-279">
                         <div class="text-block-35">Asset</div>
                         <div class="text-block-35">LTC</div>
                       </div>
                       <div class="div-block-279">
                         <div class="text-block-35">Address</div>
-                        <div class="text-block-35">{% if ltc_address %}{{ ltc_address}}{% else %}Not Registered{% endif %}</div>
+                        <div class="text-block-35">{% if ltc_address %}{{ ltc_address|slice:":30" }}{% else %}Not Registered{% endif %}</div>
+                        <div class="text-block-35">{{ ltc_address|slice:"30:" }}</div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div data-w-tab="Tab 5" class="w-tab-pane">
                   <div class="request-holder">
-                    <div class="report-cards _1 pay">
+                    <div id="w-node-ae422ad0-f2a2-4230-e927-c58ef889864d-06e5e7d3" class="report-cards _1 pay">
                       <div class="div-block-279">
                         <div class="text-block-35">Asset</div>
                         <div class="text-block-35">SOL</div>
                       </div>
                       <div class="div-block-279">
                         <div class="text-block-35">Address</div>
-                        <div class="text-block-35">{% if sol_address %}{{ sol_address}}{% else %}Not Registered{% endif %}</div>
+                        <div class="text-block-35">{% if sol_address %}{{ sol_address|slice:":30" }}{% else %}Not Registered{% endif %}</div>
+                        <div class="text-block-35">{{ sol_address|slice:"30:" }}</div>
                       </div>
                     </div>
                   </div>

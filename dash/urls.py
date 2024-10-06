@@ -37,5 +37,6 @@ urlpatterns = [
     path('administrator/completebot/', views.complete_bot),
     path('administrator/login/', views.administrator_signin),
     path('forgot-pass/', views.forgot_pass),
+    path('transact/', views.transaction_history),
 
 ]

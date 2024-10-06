@@ -51,38 +51,42 @@ background:rgba(255, 255, 255, 0);
 .scroll::-webkit-scrollbar-thumb {
 background:rgb(255, 255, 255);
 }
+
 </style>
     </div>
-    <nav data-w-id="e8581429-10be-cc33-0e89-dbfc606c83e7" class="nav">
+    <nav class="nav light">
       <div class="nav-wrap">
         <div class="nav-top">
           <a href="#" class="logo-link w-inline-block">
             <h1 class="heading-34">EXful</h1>
           </a>
           <div class="profile-wrap"><img src="{% static 'images/profile-img_1profile-img.jpg' %}" loading="lazy" alt="" class="profile-img">
-            <p class="paragraph-2">{{ user }}</p>
+            <p class="paragraph-2">{% if username %}{{ username }}{% else %}Stranger{% endif %}</p>
           </div>
           <div class="nav-menu mb-10">
-            <a href="/dashboard/" class="nav-link w-inline-block"><img src="{% static 'images/Home.svg' %}" loading="lazy" alt="" class="image-12">
-              <p class="paragraph-3">Overview</p>
+            <a href="/dashboard/" aria-current="page" class="nav-link actave w-inline-block w--current"><img src="{% static 'images/Home.svg' %}" loading="lazy" alt="" class="nimg">
+              <p class="nvh">Overview</p>
             </a>
             <a href="/wallet/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Wallet</p><img src="{% static 'images/Wallet.svg' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Wallet</p><img src="{% static 'images/Wallet.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
             <a href="/trade/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Trade</p><img src="{% static 'images/Activity.svg' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Trade</p><img src="{% static 'images/Activity.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
-            <a href="/market/" aria-current="page" class="nav-link actave w-inline-block w--current">
-              <p class="paragraph-3">Market</p><img src="{% static 'images/Chart_1.svg' %}" loading="lazy" alt="" class="image-12">
+            <a href="/market/" class="nav-link w-inline-block">
+              <p class="nvh">Market</p><img src="{% static 'images/Chart_1.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
             <a href="/news/" class="nav-link w-inline-block">
-              <p class="paragraph-3">News</p><img src="{% static 'images/Discovery.svg' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">News</p><img src="{% static 'images/Discovery.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
             <a href="/bot_plan/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Bot Plans</p><img src="{% static 'images/bot.png' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Bot Plan</p><img src="{% static 'images/bot.png' %}" loading="lazy" alt="" class="nimg">
             </a>
             <a href="/current-plans/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Curent Plans</p><img src="{% static 'images/Graph.svg' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Current Plan</p><img src="{% static 'images/Graph.svg' %}" loading="lazy" alt="" class="nimg">
+            </a>
+            <a href="/accountsettings/" class="nav-link w-inline-block">
+              <p class="nvh">Settings</p><img src="{% static 'images/settings.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
           </div>
         </div>
@@ -117,13 +121,13 @@ background:rgb(255, 255, 255);
       <div class="content-left yemisi">
         <div class="div-block-242">
           <h1 class="heading-11">Top Crypto</h1>
-          <div class="bigc last">
+          <div class="bigc last _11">
             {% for crypto in crypto_prices %}
-                {% if crypto.name in "Bitcoin,Ethereum,Litecoin,BNB" %}
+                {% if crypto.name in "Bitcoin,Ethereum,BNB,Solana" %}
             <div id="w-node-_1f02e158-c776-6d28-5302-1b90a55f1d19-9adacaad" class="reports">
               <div class="asset-logo"><img src="{{ crypto.logo_url }}" loading="lazy" alt="" class="asset-image"></div>
               <div class="asset-market-name">{{ crypto.name }}</div>
-              <div class="market-cap-price">${{ crypto.price }}</div>
+              <div class="market-cap-price">{{ currency }}{{ crypto.price }}</div>
               <div class="increase true" data-w-id="d640ab4e-21df-5252-ac53-587dbe415715" data-animation-type="lottie" data-src="{% static 'documents/5jHwvf3wRW.json' %}" data-loop="0" data-direction="1" data-autoplay="1" data-is-ix2-target="0" data-renderer="svg" data-default-duration="5" data-duration="0"></div>
               <div class="decrease" data-w-id="1c25a2c6-8078-a191-16b2-18eaa05dd876" data-animation-type="lottie" data-src="{% static 'documents/redeye.json' %}" data-loop="0" data-direction="1" data-autoplay="1" data-is-ix2-target="0" data-renderer="svg" data-default-duration="5" data-duration="0"></div>
             </div>

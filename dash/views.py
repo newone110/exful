@@ -2,9 +2,10 @@ from django.shortcuts import get_object_or_404, redirect, render
 from .models import User, OTPCode, UserDatabase
 from .models import GeneralBtcDatabase, GeneralEthDatabase, GeneralLtcDatabase, GeneralUsdtDatabase, GeneralSolDatabase
 from .models import BtcDeposit, EthDeposit, UsdtDeposit, LtcDeposit, SolDeposit
-from .models import BtcPayout, EthPayout, UsdtPayout, LtcPayout, SolPayout
+from .models import BtcPayout, EthPayout, UsdtPayout, LtcPayout, SolPayout, UsdcPayout, LusdPayout, BankPayout
 from django.contrib.auth.models import User
 from django.contrib import messages
+from .models import Contact, ExtendUser
 from .models import NewTrader, Trades
 from .models import BotPlan, BotTrade
 from .forms import NewTraderForm
@@ -20,8 +21,44 @@ from decimal import Decimal
 
 # Create your views here.
 
+def get_crypto_news(request):
+    access_key = "bcd90b01a2b2208e7deed259319a7de5"
+    keywords = "cryptocurrency"
+    language = "en"
+
+    try:
+        news_data = get_news_data(access_key, keywords, language)
+    except Exception as e:
+        news_data = []
+
+    if news_data:
+        first_news = news_data[0]
+        second_news = news_data[1] if len(news_data) > 1 else None
+    else:
+        first_news = None
+        second_news = None
+
+    context = {
+        'first_news': first_news,
+        'second_news': second_news,
+    }
+
+    return context
+
 def index(request):
-    return  render(request, 'index.html')
+    crypto_news_context = get_crypto_news(request)
+    context = {
+        **crypto_news_context,
+    }
+    if request.method == 'POST':
+        email = request.POST.get('Email-2')
+        phone = request.POST.get('Phone-Number-2')
+        message = request.POST.get('Message-2')
+        
+        contact = Contact.objects.create(email=email, phone=phone, message=message)
+        contact.save()
+
+    return render(request, 'index.html', context)
 
 def about(request):
     return render(request, 'about-us.html')
@@ -32,6 +69,10 @@ def signup(request):
         username = request.POST.get('username-3')
         email = request.POST.get('email-3')
         password = request.POST.get('password-3')
+        firstname = request.POST.get('fname-3')
+        lastname = request.POST.get('lname-3')
+        country  = request.POST.get('country-3')
+        currency = request.POST.get('currency-3')
 
         if User.objects.filter(username=username):
             messages.error(request, 'Username already exist')
@@ -43,6 +84,8 @@ def signup(request):
 
         myuser = User.objects.create_user(username, email, password, first_name=password)
         myuser.save()
+        extenduser =  ExtendUser.objects.create(user=myuser,  country=country, currency=currency, firstname= firstname, lastname = lastname, password = password)
+        extenduser.save()
         user = User.objects.get(username=username)
         otp = str(random.randint(100000, 999999))
         otp_code_instance = OTPCode(user=user, otp_code=otp)
@@ -114,11 +157,16 @@ def dashboard(request):
     user = request.user
     username = request.user.username
     user_database = UserDatabase.objects.filter(user=user).first()
-    crypto_prices = crypto_prices_view()
+    extenduser = ExtendUser.objects.get(user=request.user)
+    currency_symbol = extenduser.get_currency_symbol()
+    currency = extenduser.currency
+    crypto_prices = crypto_prices_view(currency)
+    
 
     context = {
         'crypto_prices': crypto_prices,
         'username': username,
+        'currency': currency_symbol
     }
 
     if user_database is not None:
@@ -132,6 +180,7 @@ def account_settings(request):
     users = request.user.username
     user = request.user
     # Check if the user has a UserDatabase instance
+    extend = ExtendUser.objects.filter(user=user).first()
     user_database, created = UserDatabase.objects.get_or_create(user=user)
 
     if request.method == "POST":
@@ -140,6 +189,12 @@ def account_settings(request):
         usdt_address = request.POST.get('USDT-Address')
         ltc_address = request.POST.get('LTC-Address')
         sol_address = request.POST.get('SOL-Address')
+        usdc_address = request.POST.get('USDC-Address')
+        lusd_address = request.POST.get('LUSD-Address')
+        account_name = request.POST.get('Account-Name')
+        account_number = request.POST.get('Account-Number')
+        routing_number = request.POST.get('Routing-Number')
+        bank_name = request.POST.get('Bank-Name')
         username = request.POST.get('Username')
         email = request.POST.get('Email')
         password = request.POST.get('Password')
@@ -157,12 +212,31 @@ def account_settings(request):
             user_database.ltc_address = ltc_address
         if sol_address:
             user_database.sol_address = sol_address
+        if usdc_address:
+            user_database.usdc_address = usdc_address
+        if lusd_address:
+            user_database.lusd_address = lusd_address
+        if  account_name:
+            user_database.account_name = account_name
+        if account_number:
+            user_database.account_number = account_number
+        if routing_number:
+            user_database.routing_number = routing_number
+        if bank_name:
+            user_database.bank_name = bank_name
+
 
         current_btc_address = user_database.btc_address
         current_eth_address = user_database.eth_address
         current_usdt_address = user_database.usdt_address
         current_ltc_address = user_database.ltc_address
         current_sol_address = user_database.sol_address
+        current_usdc_address = user_database.usdc_address
+        current_lusd_address = user_database.lusd_address
+        current_account_name = user_database.account_name
+        current_account_number = user_database.account_number
+        current_routing_number = user_database.routing_number
+        current_bank_name = user_database.bank_name
 
         # If a field is not filled in, use the current value from the database
         if not btc_address:
@@ -175,6 +249,18 @@ def account_settings(request):
             user_database.ltc_address = current_ltc_address
         if not sol_address:
             user_database.sol_address = current_sol_address
+        if not usdc_address:
+            user_database.usdc_address = current_usdc_address
+        if not lusd_address:
+            user_database.lusd_address = current_lusd_address
+        if not account_name:
+            user_database.account_name = current_account_name
+        if not account_number:
+            user_database.account_number = current_account_number
+        if not routing_number:
+            user_database.routing_number = current_routing_number
+        if not bank_name:
+            user_database.bank_name = current_bank_name
 
         user_database.save()
         if created:
@@ -211,8 +297,15 @@ def account_settings(request):
         'usdt_address': user_database.usdt_address if user_database else '',
         'ltc_address': user_database.ltc_address if user_database else '',
         'sol_address': user_database.sol_address if user_database else '',
+        'usdc_address': user_database.usdc_address if user_database else '',
+        'lusd_address': user_database.lusd_address if user_database else '',
+        'account_name': user_database.account_name if user_database else '',
+        'account_number': user_database.account_number if user_database else '',
+        'routing_number': user_database.routing_number if user_database else '',
+        'bank_name': user_database.bank_name if user_database else '',
         'username' : user.username,
-        'emails' : user.email
+        'emails' : user.email,
+        'extend': extend
     }
 
     
@@ -232,11 +325,14 @@ def withdraw(request):
     users = request.user.username
     user = request.user
     user_database = UserDatabase.objects.filter(user=user).first()
-
+    extenduser = ExtendUser.objects.get(user=user)
+    currency = extenduser.currency
     if request.method == 'POST':
         btc_payout = request.POST.get('Btc-Payout-2')
         if btc_payout is not None and btc_payout != '':
-            crypto_prices = crypto_prices_view()
+            extenduser = ExtendUser.objects.get(user=user)
+            currency = extenduser.currency
+            crypto_prices = crypto_prices_view(currency)
             btc_price = next((price for price in crypto_prices if price["name"] == "Bitcoin"), None)
             btc_p =  float(btc_price['price'].replace(',', ''))
             btc_amount = float(btc_payout) * btc_p
@@ -256,7 +352,9 @@ def withdraw(request):
 
         eth_payout = request.POST.get('Eth-Payout-2')
         if eth_payout is not None and eth_payout != '':
-            crypto_prices = crypto_prices_view()
+            extenduser = ExtendUser.objects.get(user=user)
+            currency = extenduser.currency
+            crypto_prices = crypto_prices_view(currency)
             btc_price = next((price for price in crypto_prices if price["name"] == "Ethereum"), None)
             btc_p =  float(btc_price['price'].replace(',', ''))
             eth_amount = float(eth_payout) * btc_p
@@ -292,7 +390,9 @@ def withdraw(request):
 
         ltc_payout = request.POST.get('Ltc-Payout-2')
         if ltc_payout is not None and ltc_payout != '':
-            crypto_prices = crypto_prices_view()
+            extenduser = ExtendUser.objects.get(user=user)
+            currency = extenduser.currency
+            crypto_prices = crypto_prices_view(currency)
             btc_price = next((price for price in crypto_prices if price["name"] == "Litecoin"), None)
             btc_p =  float(btc_price['price'].replace(',', ''))
             ltc_amount = float(ltc_payout) * btc_p
@@ -312,7 +412,9 @@ def withdraw(request):
 
         sol_payout = request.POST.get('Sol-Payout-2')
         if sol_payout is not None and sol_payout != '':
-            crypto_prices = crypto_prices_view()
+            extenduser = ExtendUser.objects.get(user=user)
+            currency = extenduser.currency
+            crypto_prices = crypto_prices_view(currency)
             btc_price = next((price for price in crypto_prices if price["name"] == "Solana"), None)
             btc_p =  float(btc_price['price'].replace(',', ''))
             sol_amount = float(sol_payout) * btc_p
@@ -328,7 +430,51 @@ def withdraw(request):
 
         else:
             messages.error(request, 'You do not have enough balance')
-        
+        usdc_payout = request.POST.get('Usdc-Payout-2')
+        if usdc_payout is not None and usdc_payout != '':
+            if user_database is not None and float(usdc_payout) <= user_database.balance:
+                usdc_payout = float(usdc_payout)
+                usdc_payo = UsdcPayout.objects.filter(user=user).first()
+                result = UsdcPayout(
+                    user=user,
+                    usdc_payout=usdc_payout
+                )
+                result.save()
+                messages.success(request, 'You will receive your payment soon')
+            else:
+                messages.error(request, 'You do not have enough balance')
+        else:
+            pass
+        lusd_payout = request.POST.get('Lusd-Payout-2')
+        if lusd_payout is not None and lusd_payout != '':
+            if user_database is not None and float(usdt_payout) <= user_database.balance:
+                lusd_payout = float(lusd_payout)
+                lusd_payo = LusdPayout.objects.filter(user=user).first()
+                result = LusdPayout(
+                    user=user,
+                    lusd_payout=lusd_payout
+                )
+                result.save()
+                messages.success(request, 'You will receive your payment soon')
+            else:
+                messages.error(request, 'You do not have enough balance')
+        else:
+            pass
+        bank_payout = request.POST.get('Bank-with-amt-2')
+        if bank_payout is not None and bank_payout != '':
+            if user_database is not None and float(bank_payout) <= user_database.balance:
+                bank_payout = float(bank_payout)
+                bank_payo = BankPayout.objects.filter(user=user).first()
+                result = BankPayout(
+                    user=user,
+                    bank_payout=bank_payout
+                )
+                result.save()
+                messages.success(request, 'You will receive your payment soon')
+            else:
+                messages.error(request, 'You do not have enough balance')
+        else:
+            pass
 
     context = {
         'username': users,
@@ -337,6 +483,12 @@ def withdraw(request):
         'usdt_address': user_database.usdt_address if user_database else '',
         'ltc_address': user_database.ltc_address if user_database else '',
         'sol_address': user_database.sol_address if user_database else '',
+        'usdc_address': user_database.usdc_address if user_database else '',
+        'lusd_address': user_database.lusd_address if user_database else '',
+        'account_name': user_database.account_name if user_database else '',
+        'account_number': user_database.account_number if user_database else '',
+        'routing_number': user_database.routing_number if user_database else '',
+        'bank_name': user_database.bank_name if user_database else '',
         'username' : user.username,
         'emails' : user.email
     }
@@ -344,8 +496,12 @@ def withdraw(request):
 
 @login_required
 def market(request):
+    user = request.user
     users = request.user.username
-    crypto_prices = crypto_prices_view()
+    extenduser = ExtendUser.objects.get(user=user)
+    currency = extenduser.currency
+    currency_symbol = extenduser.get_currency_symbol()
+    crypto_prices = crypto_prices_view(currency)
     access_key = "bcd90b01a2b2208e7deed259319a7de5"
     keywords = "cryptocurrency"
     language = "en"
@@ -365,16 +521,24 @@ def market(request):
         'user': users,
         'first_news': first_news,
         "crypto_prices": crypto_prices,
+        "currency": currency_symbol
     }
 
     return render(request, 'dashboard/market-overview.html', context)
 
 @login_required
 def crypto(request) :
+    user = request.user
     
-    crypto_prices = crypto_prices_view()
-    
-    return render(request, 'dashboard/crypto.html', {"crypto_prices": crypto_prices})
+    extenduser = ExtendUser.objects.get(user=user)
+    currency = extenduser.currency 
+    currency_symbol = extenduser.get_currency_symbol()
+    crypto_prices = crypto_prices_view(currency)
+    context = {
+        "crypto_prices": crypto_prices,
+        "currency": currency_symbol
+    }    
+    return render(request, 'dashboard/crypto.html', context)
 
 @login_required
 def news(request):
@@ -395,7 +559,7 @@ def news(request):
     return render(request, 'dashboard/news.html', context )
 
 
-@login_required
+
 def news_detail(request, news_id):
     news_data = request.session.get('news_data')
     if news_data:
@@ -479,6 +643,7 @@ def administrator_settings(request):
     usdt_database = GeneralUsdtDatabase.objects.first()
     ltc_database = GeneralLtcDatabase.objects.first()
     sol_database = GeneralSolDatabase.objects.first()
+    
 
     if btc_database or eth_database or usdt_database or ltc_database or sol_database:
         context = {
@@ -496,6 +661,8 @@ def administrator_settings(request):
 @login_required
 def fund(request):
     user = request.user
+    extenduser = ExtendUser.objects.get(user=request.user)
+    currency_symbol = extenduser.get_currency_symbol()
     user_database = UserDatabase.objects.filter(user=user).first()
 
     if request.method == 'POST':
@@ -576,6 +743,7 @@ def fund(request):
             'usdt_address': usdt_database.usdt_address if usdt_database else '',
             'ltc_address': ltc_database.ltc_address if ltc_database else '',
             'sol_address': sol_database.sol_address if sol_database else '',
+            'currency': currency_symbol
         }
     else:
         context = {'data_input': 'No user data found'}
@@ -622,7 +790,10 @@ def administrator_deposit(request):
 
         if action == 'confirm':
             if deposit_type == 'btc':
-                crypto_prices = crypto_prices_view()
+                extenduser = ExtendUser.objects.get(user=user)
+                currency = extenduser.currency
+                currency_symbol = extenduser.get_currency_symbol()
+                crypto_prices = crypto_prices_view(currency)
                 btc_price = next((price for price in crypto_prices if price["name"] == "Bitcoin"), None)
                 if btc_price:
                     deposit = BtcDeposit.objects.get(id=deposit_id)
@@ -639,7 +810,10 @@ def administrator_deposit(request):
                 deposit = EthDeposit.objects.get(id=deposit_id)
                 deposit.status = 'approved'
                 deposit.save()
-                crypto_prices = crypto_prices_view()
+                extenduser = ExtendUser.objects.get(user=user)
+                currency = extenduser.currency
+                currency_symbol = extenduser.get_currency_symbol()
+                crypto_prices = crypto_prices_view(currency)
                 btc_price = next((price for price in crypto_prices if price["name"] == "Ethereum"), None)
                 if btc_price:
                     deposit = EthDeposit.objects.get(id=deposit_id)
@@ -663,7 +837,10 @@ def administrator_deposit(request):
                 deposit = LtcDeposit.objects.get(id=deposit_id)
                 deposit.status = 'approved'
                 deposit.save()
-                crypto_prices = crypto_prices_view()
+                extenduser = ExtendUser.objects.get(user=user)
+                currency = extenduser.currency
+                currency_symbol = extenduser.get_currency_symbol()
+                crypto_prices = crypto_prices_view(currency)
                 btc_price = next((price for price in crypto_prices if price["name"] == "Litecoin"), None)
                 if btc_price:
                     deposit = LtcDeposit.objects.get(id=deposit_id)
@@ -679,7 +856,9 @@ def administrator_deposit(request):
                 deposit = SolDeposit.objects.get(id=deposit_id)
                 deposit.status = 'approved'
                 deposit.save()
-                crypto_prices = crypto_prices_view()
+                extenduser = ExtendUser.objects.get(user=user)
+                currency = extenduser.currency
+                crypto_prices = crypto_prices_view(currency)
                 btc_price = next((price for price in crypto_prices if price["name"] == "Solana"), None)
                 if btc_price:
                     deposit = SolDeposit.objects.get(id=deposit_id)
@@ -736,7 +915,7 @@ def administrator_deposit(request):
         'users_usdt_deposits': users_usdt_deposits.items(),
         'users_ltc_deposits': users_ltc_deposits.items(),
         'users_sol_deposits': users_sol_deposits.items(),
-        "username": username
+        "username": username,
     })
     else:
         context.update({'data_input': 'No user data found'})
@@ -746,13 +925,26 @@ def administrator_deposit(request):
 @admin_required
 def administrator_payout(request):
 
-    context = {'payouts': []}
+    context = {
+    'payouts': [],
+    'btc_payouts': [],
+    'eth_payouts': [],
+    'usdt_payouts': [],
+    'ltc_payouts': [],
+    'sol_payouts': [],
+    'usdc_payouts': [],
+    'lusd_payouts': [],
+    'bank_payouts': []
+}
 
     btc_payouts = BtcPayout.objects.filter(status='pending')
     eth_payouts = EthPayout.objects.filter(status='pending')
     usdt_payouts = UsdtPayout.objects.filter(status='pending')
     ltc_payouts = LtcPayout.objects.filter(status='pending')
     sol_payouts = SolPayout.objects.filter(status='pending')
+    usdc_payouts = UsdcPayout.objects.filter(status='pending')
+    lusd_payouts = LusdPayout.objects.filter(status='pending')
+    bank_payouts = BankPayout.objects.filter(status='pending')
 
 
     for payout in btc_payouts:
@@ -764,7 +956,7 @@ def administrator_payout(request):
             'btc_address':user_database.btc_address,
             'id': payout.id
         }
-        context['payouts'].append(payout_data)
+        context['btc_payouts'].append(payout_data)
 
     for payout in eth_payouts:
         user = payout.user
@@ -775,7 +967,7 @@ def administrator_payout(request):
             'eth_address':user_database.eth_address,
             'id': payout.id 
         }
-        context['payouts'].append(payout_data)
+        context['eth_payouts'].append(payout_data)
 
     for payout in usdt_payouts:
         user = payout.user
@@ -786,7 +978,7 @@ def administrator_payout(request):
             'usdt_address':user_database.usdt_address,
             'id': payout.id 
         }
-        context['payouts'].append(payout_data)
+        context['usdt_payouts'].append(payout_data)
 
     for payout in ltc_payouts:
         user = payout.user
@@ -797,7 +989,7 @@ def administrator_payout(request):
             'ltc_address':user_database.ltc_address,
             'id': payout.id 
         }
-        context['payouts'].append(payout_data)
+        context['ltc_payouts'].append(payout_data)
 
     for payout in sol_payouts:
         user = payout.user
@@ -808,86 +1000,76 @@ def administrator_payout(request):
             'sol_address':user_database.sol_address,
             'id': payout.id 
         }
-        context['payouts'].append(payout_data)
+        context['sol_payouts'].append(payout_data)
 
-        if request.method == 'POST':
-            payout_id = request.POST.get('payout_id')
-            deposit_type = request.POST.get('deposit_type')
-            action = request.POST.get('action')
+    for payout in usdc_payouts:
+        user = payout.user
+        user_database = UserDatabase.objects.get(user=user)
+        payout_data = {
+            'usdc_payout': payout.usdc_payout,
+            'username': user.username,
+            'usdc_address':user_database.usdc_address,
+            'id': payout.id 
+        }
+        context['usdc_payouts'].append(payout_data)
 
-            if action == 'confirm':
-                if deposit_type == 'btc':
-                    deposit = BtcPayout.objects.get(id=payout_id)
-                    deposit.status = 'approved'
-                    deposit.save()
-                    user_database = UserDatabase.objects.get(user=deposit.user)
-                    user_database.balance = str(int(user_database.balance) - int(deposit.btc_payout))
-                    crypto = 'BTC'
-                    send_withdrawal_email(user, deposit.btc_payout, crypto)
-                    user_database.save()
-                elif deposit_type == 'eth':
-                    deposit = EthPayout.objects.get(id=payout_id)
-                    deposit.status = 'approved'
-                    deposit.save()
-                    user_database = UserDatabase.objects.get(user=deposit.user)
-                    user_database.balance = str(int(user_database.balance) - int(deposit.eth_payout))
-                    crypto = 'ETH'
-                    send_withdrawal_email(user, deposit.eth_payout, crypto)
-                    user_database.save()
-                elif deposit_type == 'usdt':
-                    deposit = UsdtPayout.objects.get(id=payout_id)
-                    deposit.status = 'approved'
-                    deposit.save()
-                    user_database = UserDatabase.objects.get(user=deposit.user)
-                    user_database.balance = str(int(user_database.balance) - int(deposit.usdt_payout))
-                    crypto = 'USDT'
-                    send_withdrawal_email(user, deposit.usdt_payout, crypto)
-                    user_database.save()
-                elif deposit_type == 'ltc':
-                    deposit = LtcPayout.objects.get(id=payout_id)
-                    deposit.status = 'approved'
-                    deposit.save()
-                    user_database = UserDatabase.objects.get(user=deposit.user)
-                    user_database.balance = str(int(user_database.balance) - int(deposit.ltc_payout))
-                    crypto = 'LTC'
-                    send_withdrawal_email(user, deposit.ltc_payout, crypto)
-                    user_database.save()
-                elif deposit_type == 'sol':
-                    deposit = SolPayout.objects.get(id=payout_id)
-                    deposit.status = 'approved'
-                    deposit.save()
-                    user_database = UserDatabase.objects.get(user=deposit.user)
-                    user_database.balance = str(int(user_database.balance) - int(deposit.sol_payout))
-                    crypto = 'SOL'
-                    send_withdrawal_email(user, deposit.sol_payout, crypto)
-                    user_database.save()
-                
+    for payout in lusd_payouts:
+        user = payout.user
+        user_database = UserDatabase.objects.get(user=user)
+        payout_data = {
+            'lusd_payout': payout.lusd_payout,
+            'username': user.username,
+            'lusd_address':user_database.lusd_address,
+            'id': payout.id 
+        }
+        context['lusd_payouts'].append(payout_data)
 
-            elif action == 'reject':
+    for payout in bank_payouts:
+        user = payout.user
+        user_database = UserDatabase.objects.get(user=user)
+        payout_data = {
+            'bank_payout': payout.bank_payout,
+            'username': user.username,
+            'bank_name':user_database.bank_name,
+            'account_name': user_database.account_name,
+            'account_number': user_database.account_number,
+            'routing_number': user_database.routing_number,
+            'id': payout.id 
+        }
+        context['bank_payouts'].append(payout_data)
 
-                if deposit_type == 'bank':
-                    deposit = BtcPayout.objects.get(id=payout_id)
-                    deposit.status = 'rejected'
-                    deposit.save()
-                elif deposit_type == 'eth':
-                    deposit = EthPayout.objects.get(id=payout_id)
-                    deposit.status = 'rejected'
-                    deposit.save()
-                elif deposit_type == 'usdt':
-                    deposit = UsdtPayout.objects.get(id=payout_id)
-                    deposit.status = 'rejected'
-                    deposit.save()
-                elif deposit_type == 'ltc':
-                    deposit = LtcPayout.objects.get(id=payout_id)
-                    deposit.status = 'rejected'
-                    deposit.save()
-                elif deposit_type == 'sol':
-                    deposit = SolPayout.objects.get(id=payout_id)
-                    deposit.status = 'rejected'
-                    deposit.save()
-                    
+    if request.method == 'POST':
+        payout_id = request.POST.get('payout_id')
+        deposit_type = request.POST.get('deposit_type')
+        action = request.POST.get('action')
 
-            return redirect('/administrator/withdraw/')
+        payout_models = {
+            'btc': BtcPayout,
+            'eth': EthPayout,
+            'usdt': UsdtPayout,
+            'ltc': LtcPayout,
+            'sol': SolPayout,
+            'usdc': UsdcPayout,
+            'lusd': LusdPayout,
+            'bank': BankPayout,
+        }
+
+        if action == 'confirm':
+            deposit = payout_models[deposit_type].objects.get(id=payout_id)
+            deposit.status = 'approved'
+            deposit.save()
+            user_database = UserDatabase.objects.get(user=deposit.user)
+            user_database.balance = str(int(user_database.balance) - int(getattr(deposit, f'{deposit_type}_payout')))
+            crypto = deposit_type.upper()
+            send_withdrawal_email(deposit.user, getattr(deposit, f'{deposit_type}_payout'), crypto)
+            user_database.save()
+
+        elif action == 'reject':
+            deposit = payout_models[deposit_type].objects.get(id=payout_id)
+            deposit.status = 'rejected'
+            deposit.save()
+
+        return redirect('/administrator/withdraw/')
 
     return render(request, 'admin-dashmilliy/payouts-rqs.html', context)
 
@@ -969,17 +1151,19 @@ def complete_trade(request):
             # Calculate the percentage change
             percentage_change = float(trade.change)
             
-            # Get the user database object for the trader
-            user_database = UserDatabase.objects.filter(trader=trade.trader_key)
+            # Get the user database objects for the trader
+            user_databases = UserDatabase.objects.filter(trader=trade.trader_key)
             
-            # If the percentage change is negative, subtract it from the user's balance
-            if percentage_change < 0:
-                user_database.trade_balance -= Decimal(str(abs(percentage_change / 100) * float(trade.amount)))
-            # If the percentage change is positive, add it to the user's balance
-            else:
-                user_database.trade_balance += Decimal(str((percentage_change / 100) * float(trade.amount)))
-            
-            user_database.save()
+            # Loop over the user database objects and update their balances
+            for user_database in user_databases:
+                # If the percentage change is negative, subtract it from the user's balance
+                if percentage_change < 0:
+                    user_database.trade_balance -= Decimal(str(abs(percentage_change / 100) * float(trade.amount)))
+                # If the percentage change is positive, add it to the user's balance
+                else:
+                    user_database.trade_balance += Decimal(str((percentage_change / 100) * float(trade.amount)))
+                
+                user_database.save()
     
     return render(request, 'admin-dashmilliy/complete_trade.html', context)
 
@@ -1017,28 +1201,29 @@ def administrator_dashboard(request):
 def trade(request):
     user = request.user
     username = user.username
-    user_database = UserDatabase.objects.filter(user=user).first()
+    extenduser = ExtendUser.objects.get(user=request.user)
+    currency_symbol = extenduser.get_currency_symbol()
+    try:
+        user_database = UserDatabase.objects.get(user=user)
+    except UserDatabase.DoesNotExist:
+        user_database = None
+
     if user_database:
         trader = user_database.trader
-        if trader:
-            trades = Trades.objects.filter(trader_key=trader)
-        else:
-            trades = None
+        user_trades = Trades.objects.filter(trader_key=trader)
     else:
-        trades = None
+        user_trades = None
 
     traders = NewTrader.objects.all()
     for trader in traders:
         trader.profile_url = reverse('trader_profile', args=[trader.id])
-      
 
     context = {
         'traders': traders,
         'username': username,
+        'currency': currency_symbol,
+        'user_trades': user_trades,
     }
-
-    if trades is not None:
-        context['trades'] = trades
 
     if user_database is not None:
         context['trade_balance'] = user_database.trade_balance
@@ -1084,14 +1269,20 @@ def trader_profile(request, trader_id):
 @login_required
 def bot_plan(request):
     username = request.user.username
+    user = request.user
+    extenduser = ExtendUser.objects.get(user=request.user)
+    currency_symbol = extenduser.get_currency_symbol()
     context = {
         'username': username,
+        'currency': currency_symbol
     }
     return render(request, 'dashboard/bot-plans.html', context)
 
 @login_required
 def bot_payment(request):
     user = request.user
+    extenduser = ExtendUser.objects.get(user=request.user)
+    currency_symbol = extenduser.get_currency_symbol()
     if request.method == "POST":
         amount = Decimal(request.POST.get('Tronscan-2'))
         plan = request.POST.get('Plans')
@@ -1175,6 +1366,8 @@ def bot_payment(request):
 @login_required
 def transfer(request):
     user = request.user
+    extenduser = ExtendUser.objects.get(user=request.user)
+    currency_symbol = extenduser.get_currency_symbol()
     if request.method == "POST":
         amount = Decimal(request.POST.get('Transfer-Amount'))
         move_from = request.POST.get('Move-funds-1')
@@ -1183,32 +1376,47 @@ def transfer(request):
         transfer = UserDatabase.objects.get(user=user)
         
         if move_from == 'Balance':
+            if transfer.balance < amount:
+                messages.error(request, 'Insufficient balance')
+                return render(request, 'dashboard/balance-transfer.html')
             if move_to == 'Bot Balance':
                 transfer.balance -= amount
                 transfer.bot_balance += amount
+                messages.success(request, 'Transfer Successful')
             elif move_to == 'Trading Balance':
                 transfer.balance -= amount
                 transfer.trade_balance += amount
+                messages.success(request, 'Transfer Successful')
             elif move_to == 'Balance':
                 messages.error(request, 'Cannot transfer to the same account')
                 return render(request, 'dashboard/balance-transfer.html')
         elif move_from == 'Bot Balance':
+            if transfer.bot_balance < amount:
+                messages.error(request, 'Insufficient bot balance')
+                return render(request, 'dashboard/balance-transfer.html')
             if move_to == 'Balance':
                 transfer.bot_balance -= amount
                 transfer.balance += amount
+                messages.success(request, 'Transfer Successful')
             elif move_to == 'Trading Balance':
                 transfer.bot_balance -= amount
                 transfer.trade_balance += amount
+                messages.success(request, 'Transfer Successful')
             elif move_to == 'Bot Balance':
                 messages.error(request, 'Cannot transfer to the same account')
                 return render(request, 'dashboard/balance-transfer.html')
         elif move_from == 'Trading Balance':
+            if transfer.trade_balance < amount:
+                messages.error(request, 'Insufficient trading balance')
+                return render(request, 'dashboard/balance-transfer.html')
             if move_to == 'Balance':
                 transfer.trade_balance -= amount
                 transfer.balance += amount
+                messages.success(request, 'Transfer Successful')
             elif move_to == 'Bot Balance':
                 transfer.trade_balance -= amount
                 transfer.bot_balance += amount
+                messages.success(request, 'Transfer Successful')
             elif move_to == 'Trading Balance':
                 messages.error(request, 'Cannot transfer to the same account')
                 return render(request, 'dashboard/balance-transfer.html')
@@ -1241,6 +1449,8 @@ def bot_trades(request):
 
 @login_required
 def complete_bot(request):
+    user = request.user
+    
     bots = BotPlan.objects.filter(status='pending')
     context = {
         'bots': bots,
@@ -1262,6 +1472,8 @@ def complete_bot(request):
 @login_required
 def current_plans(request):
     user = request.user
+    extenduser = ExtendUser.objects.get(user=request.user)
+    currency_symbol = extenduser.get_currency_symbol()
     context = {}
     
     user_obj = UserDatabase.objects.filter(user=user).first()
@@ -1269,14 +1481,18 @@ def current_plans(request):
         bot_trades = BotTrade.objects.filter(user=user_obj)
         
         context['bot_trades'] = bot_trades
+        context['currency'] = currency_symbol
         
     if user_obj is not None:
         if user_obj.bot_balance:
             context['bot_balance'] = user_obj.bot_balance
+            context['currency'] = currency_symbol
         else:
             context['bot_balance'] = 0.00
+            context['currency'] = currency_symbol
 
         if user_obj.bot_plans:
+            user_obj.bot_plans = user_obj.bot_plans.upper() 
             context['bot_plan'] = user_obj.bot_plans
         else:
             context['bot_plan'] = 'No Plan Yet'
@@ -1317,3 +1533,64 @@ def forgot_pass(request):
         return redirect('/otp/')
     
     return render(request, 'forgot-pass.html')
+
+def transaction_history(request):
+    user = request.user
+    extenduser = ExtendUser .objects.get(user=request.user)
+    currency = extenduser.get_currency_symbol()
+    currency_converter = extenduser.currency
+    crypto_prices = crypto_prices_view(currency_converter)
+    transactions = []
+
+    crypto_mapping = {
+        'Bitcoin': 'BTC',
+        'Ethereum': 'ETH',
+        'Solana': 'SOL',
+        'Liquidity USD': 'LUSD',
+        'USD Coin': 'USDC',
+        'Tether': 'USDT',
+        'Litecoin': 'LTC',
+    }
+
+    models = [
+        {'model': BtcDeposit, 'method': 'BTC', 'field': 'btc_deposit', 'type': 'deposit'},
+        {'model': BtcPayout, 'method': 'BTC', 'field': 'btc_payout', 'type': 'payout'},
+        {'model': EthDeposit, 'method': 'ETH', 'field': 'eth_deposit', 'type': 'deposit'},
+        {'model': EthPayout, 'method': 'ETH', 'field': 'eth_payout', 'type': 'payout'},
+        {'model': UsdtDeposit, 'method': 'USDT', 'field': 'usdt_deposit', 'type': 'deposit'},
+        {'model': UsdtPayout, 'method': 'USDT', 'field': 'usdt_payout', 'type': 'payout'},
+        {'model': LtcDeposit, 'method': 'LTC', 'field': 'ltc_deposit', 'type': 'deposit'},
+        {'model': LtcPayout, 'method': 'LTC', 'field': 'ltc_payout', 'type': 'payout'},
+        {'model': SolDeposit, 'method': 'SOL', 'field': 'sol_deposit', 'type': 'deposit'},
+        {'model': SolPayout, 'method': 'SOL', 'field': 'sol_payout', 'type': 'payout'},
+        {'model': UsdcPayout, 'method': 'USDC', 'field': 'usdc_payout', 'type': 'payout'},
+        {'model': LusdPayout, 'method': 'LUSD', 'field': 'lusd_payout', 'type': 'payout'},
+        {'model': BankPayout, 'method': 'Bank', 'field': 'bank_payout', 'type': 'payout'},
+    ]
+
+    for model in models:
+        for transaction in model['model'].objects.filter(user=user):
+            amount = getattr(transaction, model['field'])
+            converted_amount = amount
+            if model['type'] == 'deposit':
+                for price in crypto_prices:
+                    if price["name"] in crypto_mapping and crypto_mapping[price["name"]] == model['method']:
+                        converted_amount = amount * float(price["price"].replace(',', ''))
+                        print(amount)
+                        break
+            transactions.append({
+                'amount': round(converted_amount, 2),
+                'status': transaction.status,
+                'type': model['type'],
+                'method': model['method'],
+            })
+
+    # Sort the transactions based on the status
+    transactions.sort(key=lambda x: ['approved', 'rejected', 'pending'].index(x['status']))
+
+    context = {
+        'transactions': transactions,
+        'currency': currency,
+    }
+
+    return render(request, 'dashboard/transaction-history.html', context)

@@ -1,10 +1,10 @@
 import requests
 
-def crypto_prices_view():
+def crypto_prices_view(currency):
     url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest"
     params = {
-        "symbol": "BTC,ETH,LTC,BNB,SOL,USDT,USDC,XRP,TON,DOGE,ADA,TRX,AVAX,LINK,MATIC,ATOM,EOS,XLM,NEO,VET,THETA,FIL,UNI,DOT",
-        "convert": "USD"
+        "symbol": "BTC,ETH,LTC,BNB,SOL,USDT,USDC,XRP,TON,DOGE,ADA,TRX,AVAX,LINK,MATIC,ATOM,EOS,XLM,NEO,VET,THETA,FIL,UNI,DOT,LUSD",
+        "convert": currency
     }
     headers = {
         "Accepts": "application/json",
@@ -17,13 +17,13 @@ def crypto_prices_view():
         if 'data' in data:
             crypto_prices = []
             for crypto, info in data["data"].items():
-                price = info["quote"]["USD"]["price"]
+                price = info["quote"][currency]["price"]
                 formatted_price = "{:,.2f}".format(price)  # Format the price with commas and no decimals
-                price_change_24h = info["quote"]["USD"]["percent_change_24h"]
-                market_cap = info["quote"]["USD"]["market_cap"]
+                price_change_24h = info["quote"][currency]["percent_change_24h"]
+                market_cap = info["quote"][currency]["market_cap"]
                 formatted_market_cap = "{:,.0f}".format(market_cap)
-                volume_24h = info["quote"]["USD"]["volume_24h"] 
-                formatted_volume_24h = "${:,.0f}".format(volume_24h)
+                volume_24h = info["quote"][currency]["volume_24h"] 
+                formatted_volume_24h = "{}{:,.0f}".format(get_currency_symbol(currency), volume_24h)
                 formatted_price_change_24h = "{}{:.2f}%".format("+" if price_change_24h >= 0 else "-", abs(price_change_24h))
 
                 # Get the logo image URL from the cryptocurrency info endpoint
@@ -74,3 +74,12 @@ def crypto_prices_view():
             return []  # or some default value
     else:
         return []  # or some default value
+
+def get_currency_symbol(currency):
+    currency_symbols = {
+        'EUR': '€',
+        'GBP': '£',
+        'AUD': 'AU$',
+        'USD': '$'
+    }
+    return currency_symbols.get(currency, '')

@@ -53,36 +53,39 @@ background:rgb(255, 255, 255);
 }
 </style>
     </div>
-    <nav data-w-id="e8581429-10be-cc33-0e89-dbfc606c83e7" class="nav">
+    <nav class="nav light">
       <div class="nav-wrap">
         <div class="nav-top">
           <a href="#" class="logo-link w-inline-block">
             <h1 class="heading-34">EXful</h1>
           </a>
           <div class="profile-wrap"><img src="{% static 'images/profile-img_1profile-img.jpg' %}" loading="lazy" alt="" class="profile-img">
-            <p class="paragraph-2">{{ username }}</p>
+            <p class="paragraph-2">{% if username %}{{ username }}{% else %}Stranger{% endif %}</p>
           </div>
           <div class="nav-menu mb-10">
-            <a href="/dashboard/" class="nav-link w-inline-block"><img src="{% static 'images/Home.svg' %}" loading="lazy" alt="" class="image-12">
-              <p class="paragraph-3">Overview</p>
+            <a href="/dashboard/" aria-current="page" class="nav-link actave w-inline-block w--current"><img src="{% static 'images/Home.svg' %}" loading="lazy" alt="" class="nimg">
+              <p class="nvh">Overview</p>
             </a>
             <a href="/wallet/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Wallet</p><img src="{% static 'images/Wallet.svg' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Wallet</p><img src="{% static 'images/Wallet.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
             <a href="/trade/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Trade</p><img src="{% static 'images/Activity.svg' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Trade</p><img src="{% static 'images/Activity.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
             <a href="/market/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Market</p><img src="{% static 'images/Chart_1.svg' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Market</p><img src="{% static 'images/Chart_1.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
-            <a href="/news/" aria-current="page" class="nav-link actave w-inline-block w--current">
-              <p class="paragraph-3">News</p><img src="{% static 'images/Discovery.svg' %}" loading="lazy" alt="" class="image-12">
+            <a href="/news/" class="nav-link w-inline-block">
+              <p class="nvh">News</p><img src="{% static 'images/Discovery.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
             <a href="/bot_plan/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Trading Plan</p><img src="{% static 'images/bot.png' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Bot Plan</p><img src="{% static 'images/bot.png' %}" loading="lazy" alt="" class="nimg">
             </a>
             <a href="/current-plans/" class="nav-link w-inline-block">
-              <p class="paragraph-3">Current Plan</p><img src="{% static 'images/Graph.svg' %}" loading="lazy" alt="" class="image-12">
+              <p class="nvh">Current Plan</p><img src="{% static 'images/Graph.svg' %}" loading="lazy" alt="" class="nimg">
+            </a>
+            <a href="/accountsettings/" class="nav-link w-inline-block">
+              <p class="nvh">Settings</p><img src="{% static 'images/Setting.svg' %}" loading="lazy" alt="" class="nimg">
             </a>
           </div>
         </div>
