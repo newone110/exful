@@ -10,8 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
+import sys
 from pathlib import Path
 
+sys.path.insert(0, os.path.dirname(__file__))
 
 YAGMAIL_USERNAME = 'wpetss01@gmail.com'
 YAGMAIL_PASSWORD = 'ahadmfycskhubweu'
@@ -47,6 +49,10 @@ INSTALLED_APPS = [
     'dash.apps.DashConfig'
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'authentication.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -134,6 +140,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Update this line
-AUTH_USER_MODEL = 'auth.User'
+
 

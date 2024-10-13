@@ -72,7 +72,7 @@
               <div data-w-tab="Tab 1" class="w-tab-pane w--tab-active">
                 
                 <div class="request-holder">
-                    {% for bot in bots %}
+                    {% for bot in bot_data %}
                   <div id="w-node-ae422ad0-f2a2-4230-e927-c58ef889864d-06e5e7d3" class="report-cards _1 pay">
                     <div class="div-block-279">
                       <div class="text-block-35">User</div>
@@ -85,6 +85,10 @@
                     <div class="div-block-279">
                       <div class="text-block-35">Status</div>
                       <div class="text-block-35 addy">{% if bot.status %}{{ bot.status }}{% else %}Not Registered{% endif %}</div>
+                    </div>
+                    <div class="div-block-279">
+                      <div class="text-block-35">Plan</div>
+                      <div class="text-block-35 addy">{% if bot.bot_plan %}{{ bot.bot_plan }}{% else %}Not Registered{% endif %}</div>
                     </div>
                     
                     <div class="div-block-281">

@@ -17,7 +17,7 @@ def send_welcome_email(user):
 def send_otp_email(user, otp):
     yag = yagmail.SMTP('wpetss01@gmail.com', 'ahadmfycskhubweu', host='smtp.gmail.com', port=465)
     subject = 'OTP for Exful account!'
-    template = get_template('withdrawal.html')
+    template = get_template('otp-message.html')
     context = {'user': user, 'otp': otp}
     html_content = template.render(context)
     inline_html = transform(html_content)
@@ -26,7 +26,7 @@ def send_otp_email(user, otp):
 def send_funding_email(user, amount, crypto):
     yag = yagmail.SMTP('wpetss01@gmail.com', 'ahadmfycskhubweu', host='smtp.gmail.com', port=465)
     subject = 'Funding Successful for Exful account!'
-    template = get_template('withdrawal.html')
+    template = get_template('funding.html')
     context = {'user': user, 'amount': amount, 'crypto': crypto}
     html_content = template.render(context)
     inline_html = transform(html_content)

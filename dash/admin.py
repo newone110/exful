@@ -4,8 +4,6 @@ from .models import GeneralBtcDatabase, GeneralEthDatabase,  GeneralLtcDatabase,
 from .models import BtcDeposit, EthDeposit, UsdtDeposit, LtcDeposit, SolDeposit
 from. models import BtcPayout, EthPayout, UsdtPayout, LtcPayout, SolPayout, ExtendUser, UsdcPayout, LusdPayout, BankPayout
 from .models import Contact, Trades, NewTrader
-from django.contrib.auth.models import User
-from django.contrib.auth.admin import UserAdmin
 
 
 # Register your models here.

@@ -58,7 +58,7 @@
     <div id="w-node-_65d0f732-57e1-0510-4271-a3ef4eba0d76-1023f935" class="div-block-266 depi">
       <div id="w-node-_7269f980-fed0-5615-bd0b-c8d97c2ed74b-1023f935" class="listhold">
         <div class="traderieditcard sml">
-          <h2 class="heading-16"> Crypto Trade Requests</h2>
+          <h2 class="heading-16"> Bot Trade Requests</h2>
         </div>
         <div class="copy-trade-requests">
           <div id="w-node-_602912a3-5ca8-fe62-c143-13b2eda21801-1023f935" class="div-block-283">
@@ -74,11 +74,11 @@
                 </div>
                 <div class="div-block-284">
                   <select id="Trader"name="bot_id" data-name="Trader" class="select-field-4 w-select">
-                    <option value="" disabled selected>Choose a Package</option>
+                    <option value="" disabled selected>Choose User</option>
+                    {% for username in usernames %}
+                    <option value="{{username}}">{{ username }}</option>
                     
-                    <option value="bronze">Bronze Package</option>
-                    <option value="silver">Silver Package</option>
-                    <option value="enterprise">Enterprise Package</option>
+                    {% endfor %}
                     
                     <input type="hidden" name="category" value="crypto">
                   </select>

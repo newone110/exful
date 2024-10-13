@@ -15,6 +15,7 @@ from django.contrib.auth import authenticate, login, logout
 from exful.get_crypto import crypto_prices_view
 from exful.news import get_news_data
 from django.urls import reverse
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 import random
 from decimal import Decimal
@@ -129,23 +130,23 @@ def otp_page(request):
         
     return render(request, 'otp.html')
 
-def signin(request) :
-
-    if request.method == "POST" :
-        username = request.POST.get('username-3')
+def signin(request):
+    if request.method == "POST":
+        email = request.POST.get('email-4')
         password = request.POST.get('password-3')
-        
-        user = authenticate(username=username ,password=password)
+
+        user = authenticate(request, email=email, password=password)
 
         if user is not None:
-            login(request, user)
-            return redirect(reverse('dashboard_url'))
-
+            try:
+                login(request, user)
+                return redirect(reverse('dashboard_url'))
+            except Exception as e:
+                messages.error(request, "An error occurred: " + str(e))
+                return render(request, 'login.html')
         else:
             messages.error(request, "Invalid Credentials")
-        
-        
-        
+
     return render(request, 'login.html')
 
 def signout(request):
@@ -1156,6 +1157,7 @@ def complete_trade(request):
             
             # Loop over the user database objects and update their balances
             for user_database in user_databases:
+                
                 # If the percentage change is negative, subtract it from the user's balance
                 if percentage_change < 0:
                     user_database.trade_balance -= Decimal(str(abs(percentage_change / 100) * float(trade.amount)))
@@ -1240,17 +1242,28 @@ def trade(request):
 def trader_profile(request, trader_id):
     user = request.user
     user_database = UserDatabase.objects.filter(user=user).first()
-    if request.method == 'POST': 
-        trader = get_object_or_404(NewTrader, id=trader_id)
-        if user_database.trade_balance > trader.minimum_deposit:
-            user_database.trader = trader
-            user_database.save()
-            print(user_database.trader)
-            messages.success(request, 'Copy Trade requested')
-            return redirect(reverse('trader_profile', args=[trader_id]))
+    if user_database is not None:
+        if user_database.trader is not None:
+            if request.method == 'POST':
+                user_database.trader = None
+                user_database.save()
+                messages.error(request, 'Already copying? Select other traders to switch')
+                return redirect(reverse('trader_profile', args=[trader_id]))  # Redirect back to trader_profile
+            
         else:
-            messages.error(request, 'Insufficient balance to copy this trader')
-            return redirect(reverse('trader_profile', args=[trader_id]))
+            if request.method == 'POST': 
+                trader = get_object_or_404(NewTrader, id=trader_id)
+                if user_database.trade_balance > trader.minimum_deposit:
+                    user_database.trader = trader
+                    user_database.save()
+                    messages.success(request, 'Copy Trade requested')
+                    return redirect(reverse('trader_profile', args=[trader_id]))
+                else:
+                    messages.error(request, 'Insufficient balance to copy this trader')
+                    return redirect(reverse('trader_profile', args=[trader_id]))
+    else:
+        messages.error(request, 'Fund your account to access this feature')
+        return redirect('/trade/')
         
     trader = get_object_or_404(NewTrader, id=trader_id)
     
@@ -1427,30 +1440,40 @@ def transfer(request):
 
 @login_required
 def bot_trades(request):
-
     if request.method == "POST":
         amount = request.POST.get('Crypto-Amount-3')
         asset = request.POST.get('Asset')
         package = request.POST.get('bot_id')
+
+        users = User.objects.get(username=package)
         
-        users = UserDatabase.objects.filter(bot_plans=package)
-        for user in users:
-            user.bot_balance += Decimal(amount)
-            user.save()
-            
+        if users:
+            user_obj = UserDatabase.objects.get(user=users)
+            user_obj.bot_balance += Decimal(amount)
+            user_obj.save()
+
             # Create a new BotTrade object to record the transaction
-            bot_trade = BotTrade(user=user, amount=Decimal(amount), asset=asset)
+            bot_trade = BotTrade(user=user_obj, amount=Decimal(amount), asset=asset)
             bot_trade.save()
 
-        return redirect('/administrator/bot-trade/')
+            return redirect('/administrator/bot-trade/')
+        else:
+            # Handle the case where the package is not a valid username
+            # You can return an error message or redirect to an error page
+            messages.error(request, 'Invalid Username')
+            return render(request, 'admin-dashmilliy/bot-trade.html')
+        
+    users = User.objects.all()
+    usernames = [user.username for user in users]
+    context = {
+        'usernames': usernames
+    }
 
-
-    return render(request, 'admin-dashmilliy/bot-trade.html')
+    return render(request, 'admin-dashmilliy/bot-trade.html', context)
 
 @login_required
 def complete_bot(request):
     user = request.user
-    
     bots = BotPlan.objects.filter(status='pending')
     context = {
         'bots': bots,
@@ -1466,7 +1489,19 @@ def complete_bot(request):
             user_obj.save()
             bot.status = 'approved'
             bot.save()
-            
+    
+    # Create a new dictionary with bot objects and their associated bot plans
+    bot_data = []
+    for bot in bots:
+        user_obj = UserDatabase.objects.get(user=bot.user)
+        bot_data.append({
+            'bot': bot,
+            'bot_plan': user_obj.bot_plans
+        })
+    
+    # Update the context dictionary with the new bot data
+    context['bot_data'] = bot_data
+    
     return render(request, 'admin-dashmilliy/complete_bot.html', context)
 
 @login_required
